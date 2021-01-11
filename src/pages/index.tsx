@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // markup
-const IndexPage = () => {
+const IndexPage: React.FC = () => {
   return (
     <>
       <h1>Heading</h1>
