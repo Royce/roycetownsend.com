@@ -13,16 +13,25 @@ module.exports = {
         icon: 'src/images/icon.png',
       },
     },
-    'gatsby-plugin-mdx',
-    'gatsby-transformer-sharp',
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        name: 'images',
-        path: './src/images/',
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1000,
+              linkImagesToOriginal: false,
+            },
+          },
+          { resolve: `gatsby-remark-slug` },
+          { resolve: `gatsby-remark-copy-linked-files` },
+          { resolve: `gatsby-remark-smartypants` },
+        ],
       },
-      __key: 'images',
     },
+    'gatsby-transformer-sharp',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -30,6 +39,20 @@ module.exports = {
         path: './src/pages/',
       },
       __key: 'pages',
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `content/posts`,
+        name: `content/posts`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `content/assets`,
+        name: `content/assets`,
+      },
     },
   ],
 };

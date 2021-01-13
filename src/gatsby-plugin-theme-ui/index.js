@@ -1,3 +1,5 @@
+import syntaxHighlighting from '@theme-ui/prism/presets/night-owl.json';
+
 export default {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
@@ -104,8 +106,7 @@ export default {
       },
     },
     code: {
-      fontFamily: 'monospace',
-      fontSize: 'inherit',
+      ...syntaxHighlighting,
     },
     table: {
       width: '100%',
@@ -122,6 +123,13 @@ export default {
     },
     img: {
       maxWidth: '100%',
+    },
+    blockquote: {
+      borderLeftColor: 'primary',
+      borderLeftWidth: 4,
+      borderLeftStyle: 'solid',
+      m: 0,
+      px: 4,
     },
   },
 };
