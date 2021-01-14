@@ -88,7 +88,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         image: {
           type: `File`,
-          resolve: async (source, args, context, info) => {
+          resolve: async (source, args, context) => {
             if (source.image___NODE) {
               return context.nodeModel.getNodeById({ id: source.image___NODE });
             } else if (source.image) {

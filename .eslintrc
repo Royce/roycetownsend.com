@@ -14,16 +14,20 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  "plugins": ["react", "react-hooks", "jsx-a11y", "prettier"],
-  "extends": ["plugin:react/recommended", "airbnb", "prettier/prettier", "prettier/react"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
   "rules": {
-    "prettier/prettier": "error",
-    "import/prefer-default-export": "off",
-    "react/prop-types": "off",
-    "react/jsx-filename-extension": "off",
+    "no-unused-vars": "warn",
     "react/jsx-props-no-spreading": "off",
     "import/extensions": [
-      "error",
+      "warn",
       "ignorePackages",
       {
         "ts": "never",
@@ -35,30 +39,24 @@
   },
   "overrides": [
     {
+      "files": "gatsby-*.js",
+      "env": { "node": true }
+    },
+    {
       "files": "**/*.+(ts|tsx)",
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": "./tsconfig.json"
       },
-      "plugins": ["@typescript-eslint/eslint-plugin"],
+      "plugins": ["@typescript-eslint"],
       "extends": [
-        "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-        "eslint-config-prettier/@typescript-eslint"
+        "eslint-config-prettier/@typescript-eslint",
+        "plugin:import/typescript"
       ],
       "rules": {
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-var-requires": "off",
-        "no-use-before-define": [0],
-        "@typescript-eslint/no-use-before-define": [1],
-        "@typescript-eslint/quotes": [
-          2,
-          "backtick",
-          {
-            "avoidEscape": true
-          }
-        ]
+        "react/prop-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "off"
       }
     }
   ],
