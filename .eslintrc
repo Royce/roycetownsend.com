@@ -61,10 +61,18 @@
     }
   ],
   "settings": {
+    "react": {
+      "version": "detect",
+      "linkComponents": [
+        // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+        "Hyperlink",
+        { "name": "Link", "linkAttribute": "to" }
+      ]
+    },
     "import/resolver": {
       "root-import": {
-        "rootPathPrefix": "@",
-        "rootPathSuffix": "src",
+        "rootPathPrefix": "src/",
+        "rootPathSuffix": "src/",
         "extensions": [".js", ".ts", ".tsx", ".jsx", ".mdx"]
       }
     }

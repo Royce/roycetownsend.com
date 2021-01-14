@@ -1,10 +1,9 @@
 /** @jsx jsx */
-import * as React from 'react';
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import { jsx, Styled } from 'theme-ui';
 
-import Layout from '../components/layout';
-import { PostsQuery } from '../graphql';
+import Layout from 'src/components/layout';
+import { PostsQuery } from 'src/graphql';
 
 const PostListPage: React.FC = () => {
   const data: PostsQuery = useStaticQuery(graphql`
@@ -30,7 +29,7 @@ const PostListPage: React.FC = () => {
         sx={{
           listStyle: `none`,
           display: `grid`,
-          gridGap: 3,
+          gap: 3,
           gridTemplateColumns: `repeat(auto-fit, minmax(256px, 1fr))`,
           m: 0,
           px: 3,

@@ -3,6 +3,7 @@ module.exports = {
     title: 'Royce Townsend',
   },
   plugins: [
+    'gatsby-plugin-root-import', // map src/ to src/
     'gatsby-plugin-theme-ui',
     'gatsby-theme-style-guide',
     'gatsby-plugin-sharp',
