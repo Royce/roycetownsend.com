@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import * as React from 'react';
 import { graphql } from 'gatsby';
-import { jsx } from 'theme-ui';
+import { jsx, Styled } from 'theme-ui';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import Layout from '../components/layout';
@@ -11,7 +11,7 @@ const PostPage: React.FC<{ data: PostQuery }> = ({ data }) => {
   const post = data.blogPost;
   return (
     <Layout>
-      <h1>{post.title}</h1>
+      <Styled.h1>{post.title}</Styled.h1>
       <MDXRenderer>{post.body}</MDXRenderer>
     </Layout>
   );

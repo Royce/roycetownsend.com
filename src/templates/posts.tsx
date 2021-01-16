@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { graphql, Link, useStaticQuery } from 'gatsby';
-import { jsx, Styled } from 'theme-ui';
+import { Grid, jsx, Styled } from 'theme-ui';
 
 import Layout from 'src/components/layout';
 import { PostsQuery } from 'src/graphql';
@@ -25,24 +25,15 @@ const PostListPage: React.FC = () => {
 
   return (
     <Layout>
-      <ul
-        sx={{
-          listStyle: `none`,
-          display: `grid`,
-          gap: 3,
-          gridTemplateColumns: `repeat(auto-fit, minmax(256px, 1fr))`,
-          m: 0,
-          px: 3,
-          py: 4,
-        }}
+      <Grid
+        as="ul"
+        gap={4}
+        columns={[1, 2]}
+        sx={{ listStyle: `none`, m: 0, px: 0, py: 4 }}
       >
         {posts.map((post) => (
           <li key={post.id} sx={{}}>
-            <Styled.h2
-              sx={{
-                m: 0,
-              }}
-            >
+            <Styled.h2 sx={{ m: 0 }}>
               <Link
                 to={post.slug}
                 sx={{
@@ -58,16 +49,10 @@ const PostListPage: React.FC = () => {
               </Link>
             </Styled.h2>
             <small sx={{ fontWeight: `bold` }}>{post.date}</small>
-            <Styled.p
-              sx={{
-                m: 0,
-              }}
-            >
-              {post.excerpt}
-            </Styled.p>
+            <Styled.p sx={{ m: 0 }}>{post.excerpt}</Styled.p>
           </li>
         ))}
-      </ul>
+      </Grid>
     </Layout>
   );
 };

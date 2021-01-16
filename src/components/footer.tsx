@@ -1,14 +1,8 @@
 /** @jsx jsx */
-import { jsx } from 'theme-ui';
+import { Container, jsx } from 'theme-ui';
 
 const Footer: React.FC = () => (
-  <footer
-    sx={{
-      width: `100%`,
-    }}
-  >
-    © 2021 Royce Townsend
-  </footer>
+  <Container as={'footer'}>© 2021 Royce Townsend</Container>
 );
 
 export default Footer;

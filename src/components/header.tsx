@@ -1,16 +1,32 @@
 /** @jsx jsx */
-import { jsx } from 'theme-ui';
+import { Link } from 'gatsby';
+import { Container, Flex, jsx } from 'theme-ui';
+import NavLink from './NavLink';
 
 const Header: React.FC = () => (
-  <header
-    sx={{
-      width: `100%`,
-      display: `flex`,
-      alignItems: `center`,
-    }}
-  >
-    Royce Townsend
-  </header>
+  <Container>
+    <header sx={{ variant: 'styles.header' }}>
+      <Flex sx={{ alignItems: 'baseline' }}>
+        <Link
+          to="/"
+          sx={{
+            variant: 'styles.navlink',
+            fontSize: 4,
+            py: [0, 2],
+          }}
+        >
+          Royce Townsend
+        </Link>
+        <div sx={{ mx: 'auto' }} />
+        <NavLink to="/" partiallyActive={false}>
+          About
+        </NavLink>
+        <NavLink to="/blog" partiallyActive={true}>
+          Blog
+        </NavLink>
+      </Flex>
+    </header>
+  </Container>
 );
 
 export default Header;

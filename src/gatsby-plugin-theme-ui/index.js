@@ -1,6 +1,15 @@
 import syntaxHighlighting from '@theme-ui/prism/presets/night-owl.json';
 
 export default {
+  breakpoints: ['40em', '56em', '64em'],
+  sizes: {
+    container: '60em',
+  },
+  layout: {
+    container: {
+      px: [2, 4],
+    },
+  },
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body:
@@ -48,11 +57,17 @@ export default {
       fontWeight: 'body',
     },
     h1: {
-      color: 'text',
+      backgroundColor: 'secondary',
+      color: 'background',
+      mx: -2,
+      p: 2,
+      my: 0,
       fontFamily: 'heading',
       lineHeight: 'heading',
-      fontWeight: 'heading',
+      fontWeight: 'text',
       fontSize: 5,
+      letterSpacing: 2,
+      wordSpacing: 8,
     },
     h2: {
       color: 'text',
@@ -98,9 +113,20 @@ export default {
     a: {
       color: 'primary',
     },
+    navlink: {
+      color: 'text',
+      fontWeight: 'heading',
+      textDecoration: 'none',
+      ':hover': {
+        textDecoration: 'underline',
+      },
+    },
     pre: {
       fontFamily: 'monospace',
       overflowX: 'auto',
+      mx: -2,
+      px: 2,
+      py: 1,
       code: {
         color: 'inherit',
       },
