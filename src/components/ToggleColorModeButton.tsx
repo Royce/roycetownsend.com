@@ -1,6 +1,6 @@
 /** @jsx jsx */
 /* global process */
-import { Badge, Button, jsx, useColorMode } from 'theme-ui';
+import { Button, jsx, useColorMode } from 'theme-ui';
 
 const ToggleColorModeButton: React.FC = () => {
   const [colorMode, setColorMode] = useColorMode();
