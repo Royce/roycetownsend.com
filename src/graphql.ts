@@ -38,7 +38,7 @@ export type BlogPost = {
   slug: Scalars['String'];
   redirectFrom: Array<Maybe<Scalars['String']>>;
   date: Scalars['Date'];
-  tags: Array<Maybe<Scalars['String']>>;
+  tags?: Maybe<Array<Maybe<BlogTag>>>;
   excerpt: Scalars['String'];
   image?: Maybe<File>;
   imageAlt?: Maybe<Scalars['String']>;
@@ -89,6 +89,9 @@ export enum BlogPostFieldsEnum {
   RedirectFrom = 'redirectFrom',
   Date = 'date',
   Tags = 'tags',
+  TagsId = 'tags___id',
+  TagsName = 'tags___name',
+  TagsSlug = 'tags___slug',
   Excerpt = 'excerpt',
   ImageSourceInstanceName = 'image___sourceInstanceName',
   ImageAbsolutePath = 'image___absolutePath',
@@ -422,7 +425,7 @@ export type BlogPostFilterInput = {
   slug?: Maybe<StringQueryOperatorInput>;
   redirectFrom?: Maybe<StringQueryOperatorInput>;
   date?: Maybe<DateQueryOperatorInput>;
-  tags?: Maybe<StringQueryOperatorInput>;
+  tags?: Maybe<BlogTagFilterListInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
   image?: Maybe<FileFilterInput>;
   imageAlt?: Maybe<StringQueryOperatorInput>;
@@ -440,6 +443,72 @@ export type BlogPostGroupConnection = {
 
 export type BlogPostSortInput = {
   fields?: Maybe<Array<Maybe<BlogPostFieldsEnum>>>;
+  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
+};
+
+export type BlogTag = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type BlogTagConnection = {
+  __typename?: 'BlogTagConnection';
+  totalCount: Scalars['Int'];
+  edges: Array<BlogTagEdge>;
+  nodes: Array<BlogTag>;
+  pageInfo: PageInfo;
+  distinct: Array<Scalars['String']>;
+  group: Array<BlogTagGroupConnection>;
+};
+
+
+export type BlogTagConnectionDistinctArgs = {
+  field: BlogTagFieldsEnum;
+};
+
+
+export type BlogTagConnectionGroupArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  field: BlogTagFieldsEnum;
+};
+
+export type BlogTagEdge = {
+  __typename?: 'BlogTagEdge';
+  next?: Maybe<BlogTag>;
+  node: BlogTag;
+  previous?: Maybe<BlogTag>;
+};
+
+export enum BlogTagFieldsEnum {
+  Id = 'id',
+  Name = 'name',
+  Slug = 'slug'
+}
+
+export type BlogTagFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
+  slug?: Maybe<StringQueryOperatorInput>;
+};
+
+export type BlogTagFilterListInput = {
+  elemMatch?: Maybe<BlogTagFilterInput>;
+};
+
+export type BlogTagGroupConnection = {
+  __typename?: 'BlogTagGroupConnection';
+  totalCount: Scalars['Int'];
+  edges: Array<BlogTagEdge>;
+  nodes: Array<BlogTag>;
+  pageInfo: PageInfo;
+  field: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+};
+
+export type BlogTagSortInput = {
+  fields?: Maybe<Array<Maybe<BlogTagFieldsEnum>>>;
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
@@ -1206,6 +1275,9 @@ export enum FileFieldsEnum {
   ChildrenMdxChildrenMdxBlogPostTitle = 'childrenMdx___childrenMdxBlogPost___title',
   ChildrenMdxChildrenMdxBlogPostSlug = 'childrenMdx___childrenMdxBlogPost___slug',
   ChildrenMdxChildrenMdxBlogPostTags = 'childrenMdx___childrenMdxBlogPost___tags',
+  ChildrenMdxChildrenMdxBlogPostTagsId = 'childrenMdx___childrenMdxBlogPost___tags___id',
+  ChildrenMdxChildrenMdxBlogPostTagsName = 'childrenMdx___childrenMdxBlogPost___tags___name',
+  ChildrenMdxChildrenMdxBlogPostTagsSlug = 'childrenMdx___childrenMdxBlogPost___tags___slug',
   ChildrenMdxChildrenMdxBlogPostDate = 'childrenMdx___childrenMdxBlogPost___date',
   ChildrenMdxChildrenMdxBlogPostRedirectFrom = 'childrenMdx___childrenMdxBlogPost___redirectFrom',
   ChildrenMdxChildrenMdxBlogPostExcerpt = 'childrenMdx___childrenMdxBlogPost___excerpt',
@@ -1266,6 +1338,9 @@ export enum FileFieldsEnum {
   ChildrenMdxChildMdxBlogPostTitle = 'childrenMdx___childMdxBlogPost___title',
   ChildrenMdxChildMdxBlogPostSlug = 'childrenMdx___childMdxBlogPost___slug',
   ChildrenMdxChildMdxBlogPostTags = 'childrenMdx___childMdxBlogPost___tags',
+  ChildrenMdxChildMdxBlogPostTagsId = 'childrenMdx___childMdxBlogPost___tags___id',
+  ChildrenMdxChildMdxBlogPostTagsName = 'childrenMdx___childMdxBlogPost___tags___name',
+  ChildrenMdxChildMdxBlogPostTagsSlug = 'childrenMdx___childMdxBlogPost___tags___slug',
   ChildrenMdxChildMdxBlogPostDate = 'childrenMdx___childMdxBlogPost___date',
   ChildrenMdxChildMdxBlogPostRedirectFrom = 'childrenMdx___childMdxBlogPost___redirectFrom',
   ChildrenMdxChildMdxBlogPostExcerpt = 'childrenMdx___childMdxBlogPost___excerpt',
@@ -1424,6 +1499,9 @@ export enum FileFieldsEnum {
   ChildMdxChildrenMdxBlogPostTitle = 'childMdx___childrenMdxBlogPost___title',
   ChildMdxChildrenMdxBlogPostSlug = 'childMdx___childrenMdxBlogPost___slug',
   ChildMdxChildrenMdxBlogPostTags = 'childMdx___childrenMdxBlogPost___tags',
+  ChildMdxChildrenMdxBlogPostTagsId = 'childMdx___childrenMdxBlogPost___tags___id',
+  ChildMdxChildrenMdxBlogPostTagsName = 'childMdx___childrenMdxBlogPost___tags___name',
+  ChildMdxChildrenMdxBlogPostTagsSlug = 'childMdx___childrenMdxBlogPost___tags___slug',
   ChildMdxChildrenMdxBlogPostDate = 'childMdx___childrenMdxBlogPost___date',
   ChildMdxChildrenMdxBlogPostRedirectFrom = 'childMdx___childrenMdxBlogPost___redirectFrom',
   ChildMdxChildrenMdxBlogPostExcerpt = 'childMdx___childrenMdxBlogPost___excerpt',
@@ -1484,6 +1562,9 @@ export enum FileFieldsEnum {
   ChildMdxChildMdxBlogPostTitle = 'childMdx___childMdxBlogPost___title',
   ChildMdxChildMdxBlogPostSlug = 'childMdx___childMdxBlogPost___slug',
   ChildMdxChildMdxBlogPostTags = 'childMdx___childMdxBlogPost___tags',
+  ChildMdxChildMdxBlogPostTagsId = 'childMdx___childMdxBlogPost___tags___id',
+  ChildMdxChildMdxBlogPostTagsName = 'childMdx___childMdxBlogPost___tags___name',
+  ChildMdxChildMdxBlogPostTagsSlug = 'childMdx___childMdxBlogPost___tags___slug',
   ChildMdxChildMdxBlogPostDate = 'childMdx___childMdxBlogPost___date',
   ChildMdxChildMdxBlogPostRedirectFrom = 'childMdx___childMdxBlogPost___redirectFrom',
   ChildMdxChildMdxBlogPostExcerpt = 'childMdx___childMdxBlogPost___excerpt',
@@ -2395,7 +2476,7 @@ export type MdxBlogPost = Node & BlogPost & {
   id: Scalars['ID'];
   title: Scalars['String'];
   slug: Scalars['String'];
-  tags: Array<Maybe<Scalars['String']>>;
+  tags: Array<Maybe<BlogTag>>;
   date: Scalars['Date'];
   redirectFrom: Array<Maybe<Scalars['String']>>;
   excerpt: Scalars['String'];
@@ -2454,6 +2535,9 @@ export enum MdxBlogPostFieldsEnum {
   Title = 'title',
   Slug = 'slug',
   Tags = 'tags',
+  TagsId = 'tags___id',
+  TagsName = 'tags___name',
+  TagsSlug = 'tags___slug',
   Date = 'date',
   RedirectFrom = 'redirectFrom',
   Excerpt = 'excerpt',
@@ -2872,7 +2956,7 @@ export type MdxBlogPostFilterInput = {
   id?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  tags?: Maybe<StringQueryOperatorInput>;
+  tags?: Maybe<BlogTagFilterListInput>;
   date?: Maybe<DateQueryOperatorInput>;
   redirectFrom?: Maybe<StringQueryOperatorInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
@@ -2900,6 +2984,160 @@ export type MdxBlogPostGroupConnection = {
 
 export type MdxBlogPostSortInput = {
   fields?: Maybe<Array<Maybe<MdxBlogPostFieldsEnum>>>;
+  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
+};
+
+export type MdxBlogTag = Node & BlogTag & {
+  __typename?: 'MdxBlogTag';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+  parent?: Maybe<Node>;
+  children: Array<Node>;
+  internal: Internal;
+};
+
+export type MdxBlogTagConnection = {
+  __typename?: 'MdxBlogTagConnection';
+  totalCount: Scalars['Int'];
+  edges: Array<MdxBlogTagEdge>;
+  nodes: Array<MdxBlogTag>;
+  pageInfo: PageInfo;
+  distinct: Array<Scalars['String']>;
+  group: Array<MdxBlogTagGroupConnection>;
+};
+
+
+export type MdxBlogTagConnectionDistinctArgs = {
+  field: MdxBlogTagFieldsEnum;
+};
+
+
+export type MdxBlogTagConnectionGroupArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  field: MdxBlogTagFieldsEnum;
+};
+
+export type MdxBlogTagEdge = {
+  __typename?: 'MdxBlogTagEdge';
+  next?: Maybe<MdxBlogTag>;
+  node: MdxBlogTag;
+  previous?: Maybe<MdxBlogTag>;
+};
+
+export enum MdxBlogTagFieldsEnum {
+  Id = 'id',
+  Name = 'name',
+  Slug = 'slug',
+  ParentId = 'parent___id',
+  ParentParentId = 'parent___parent___id',
+  ParentParentParentId = 'parent___parent___parent___id',
+  ParentParentParentChildren = 'parent___parent___parent___children',
+  ParentParentChildren = 'parent___parent___children',
+  ParentParentChildrenId = 'parent___parent___children___id',
+  ParentParentChildrenChildren = 'parent___parent___children___children',
+  ParentParentInternalContent = 'parent___parent___internal___content',
+  ParentParentInternalContentDigest = 'parent___parent___internal___contentDigest',
+  ParentParentInternalDescription = 'parent___parent___internal___description',
+  ParentParentInternalFieldOwners = 'parent___parent___internal___fieldOwners',
+  ParentParentInternalIgnoreType = 'parent___parent___internal___ignoreType',
+  ParentParentInternalMediaType = 'parent___parent___internal___mediaType',
+  ParentParentInternalOwner = 'parent___parent___internal___owner',
+  ParentParentInternalType = 'parent___parent___internal___type',
+  ParentChildren = 'parent___children',
+  ParentChildrenId = 'parent___children___id',
+  ParentChildrenParentId = 'parent___children___parent___id',
+  ParentChildrenParentChildren = 'parent___children___parent___children',
+  ParentChildrenChildren = 'parent___children___children',
+  ParentChildrenChildrenId = 'parent___children___children___id',
+  ParentChildrenChildrenChildren = 'parent___children___children___children',
+  ParentChildrenInternalContent = 'parent___children___internal___content',
+  ParentChildrenInternalContentDigest = 'parent___children___internal___contentDigest',
+  ParentChildrenInternalDescription = 'parent___children___internal___description',
+  ParentChildrenInternalFieldOwners = 'parent___children___internal___fieldOwners',
+  ParentChildrenInternalIgnoreType = 'parent___children___internal___ignoreType',
+  ParentChildrenInternalMediaType = 'parent___children___internal___mediaType',
+  ParentChildrenInternalOwner = 'parent___children___internal___owner',
+  ParentChildrenInternalType = 'parent___children___internal___type',
+  ParentInternalContent = 'parent___internal___content',
+  ParentInternalContentDigest = 'parent___internal___contentDigest',
+  ParentInternalDescription = 'parent___internal___description',
+  ParentInternalFieldOwners = 'parent___internal___fieldOwners',
+  ParentInternalIgnoreType = 'parent___internal___ignoreType',
+  ParentInternalMediaType = 'parent___internal___mediaType',
+  ParentInternalOwner = 'parent___internal___owner',
+  ParentInternalType = 'parent___internal___type',
+  Children = 'children',
+  ChildrenId = 'children___id',
+  ChildrenParentId = 'children___parent___id',
+  ChildrenParentParentId = 'children___parent___parent___id',
+  ChildrenParentParentChildren = 'children___parent___parent___children',
+  ChildrenParentChildren = 'children___parent___children',
+  ChildrenParentChildrenId = 'children___parent___children___id',
+  ChildrenParentChildrenChildren = 'children___parent___children___children',
+  ChildrenParentInternalContent = 'children___parent___internal___content',
+  ChildrenParentInternalContentDigest = 'children___parent___internal___contentDigest',
+  ChildrenParentInternalDescription = 'children___parent___internal___description',
+  ChildrenParentInternalFieldOwners = 'children___parent___internal___fieldOwners',
+  ChildrenParentInternalIgnoreType = 'children___parent___internal___ignoreType',
+  ChildrenParentInternalMediaType = 'children___parent___internal___mediaType',
+  ChildrenParentInternalOwner = 'children___parent___internal___owner',
+  ChildrenParentInternalType = 'children___parent___internal___type',
+  ChildrenChildren = 'children___children',
+  ChildrenChildrenId = 'children___children___id',
+  ChildrenChildrenParentId = 'children___children___parent___id',
+  ChildrenChildrenParentChildren = 'children___children___parent___children',
+  ChildrenChildrenChildren = 'children___children___children',
+  ChildrenChildrenChildrenId = 'children___children___children___id',
+  ChildrenChildrenChildrenChildren = 'children___children___children___children',
+  ChildrenChildrenInternalContent = 'children___children___internal___content',
+  ChildrenChildrenInternalContentDigest = 'children___children___internal___contentDigest',
+  ChildrenChildrenInternalDescription = 'children___children___internal___description',
+  ChildrenChildrenInternalFieldOwners = 'children___children___internal___fieldOwners',
+  ChildrenChildrenInternalIgnoreType = 'children___children___internal___ignoreType',
+  ChildrenChildrenInternalMediaType = 'children___children___internal___mediaType',
+  ChildrenChildrenInternalOwner = 'children___children___internal___owner',
+  ChildrenChildrenInternalType = 'children___children___internal___type',
+  ChildrenInternalContent = 'children___internal___content',
+  ChildrenInternalContentDigest = 'children___internal___contentDigest',
+  ChildrenInternalDescription = 'children___internal___description',
+  ChildrenInternalFieldOwners = 'children___internal___fieldOwners',
+  ChildrenInternalIgnoreType = 'children___internal___ignoreType',
+  ChildrenInternalMediaType = 'children___internal___mediaType',
+  ChildrenInternalOwner = 'children___internal___owner',
+  ChildrenInternalType = 'children___internal___type',
+  InternalContent = 'internal___content',
+  InternalContentDigest = 'internal___contentDigest',
+  InternalDescription = 'internal___description',
+  InternalFieldOwners = 'internal___fieldOwners',
+  InternalIgnoreType = 'internal___ignoreType',
+  InternalMediaType = 'internal___mediaType',
+  InternalOwner = 'internal___owner',
+  InternalType = 'internal___type'
+}
+
+export type MdxBlogTagFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
+  slug?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+};
+
+export type MdxBlogTagGroupConnection = {
+  __typename?: 'MdxBlogTagGroupConnection';
+  totalCount: Scalars['Int'];
+  edges: Array<MdxBlogTagEdge>;
+  nodes: Array<MdxBlogTag>;
+  pageInfo: PageInfo;
+  field: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+};
+
+export type MdxBlogTagSortInput = {
+  fields?: Maybe<Array<Maybe<MdxBlogTagFieldsEnum>>>;
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
@@ -3041,6 +3279,9 @@ export enum MdxFieldsEnum {
   ChildrenMdxBlogPostTitle = 'childrenMdxBlogPost___title',
   ChildrenMdxBlogPostSlug = 'childrenMdxBlogPost___slug',
   ChildrenMdxBlogPostTags = 'childrenMdxBlogPost___tags',
+  ChildrenMdxBlogPostTagsId = 'childrenMdxBlogPost___tags___id',
+  ChildrenMdxBlogPostTagsName = 'childrenMdxBlogPost___tags___name',
+  ChildrenMdxBlogPostTagsSlug = 'childrenMdxBlogPost___tags___slug',
   ChildrenMdxBlogPostDate = 'childrenMdxBlogPost___date',
   ChildrenMdxBlogPostRedirectFrom = 'childrenMdxBlogPost___redirectFrom',
   ChildrenMdxBlogPostExcerpt = 'childrenMdxBlogPost___excerpt',
@@ -3169,6 +3410,9 @@ export enum MdxFieldsEnum {
   ChildMdxBlogPostTitle = 'childMdxBlogPost___title',
   ChildMdxBlogPostSlug = 'childMdxBlogPost___slug',
   ChildMdxBlogPostTags = 'childMdxBlogPost___tags',
+  ChildMdxBlogPostTagsId = 'childMdxBlogPost___tags___id',
+  ChildMdxBlogPostTagsName = 'childMdxBlogPost___tags___name',
+  ChildMdxBlogPostTagsSlug = 'childMdxBlogPost___tags___slug',
   ChildMdxBlogPostDate = 'childMdxBlogPost___date',
   ChildMdxBlogPostRedirectFrom = 'childMdxBlogPost___redirectFrom',
   ChildMdxBlogPostExcerpt = 'childMdxBlogPost___excerpt',
@@ -3536,6 +3780,8 @@ export enum PotraceTurnPolicy {
 
 export type Query = {
   __typename?: 'Query';
+  blogTag?: Maybe<BlogTag>;
+  allBlogTag: BlogTagConnection;
   blogPost?: Maybe<BlogPost>;
   allBlogPost: BlogPostConnection;
   file?: Maybe<File>;
@@ -3550,12 +3796,29 @@ export type Query = {
   allImageSharp: ImageSharpConnection;
   mdx?: Maybe<Mdx>;
   allMdx: MdxConnection;
+  mdxBlogTag?: Maybe<MdxBlogTag>;
+  allMdxBlogTag: MdxBlogTagConnection;
   mdxBlogPost?: Maybe<MdxBlogPost>;
   allMdxBlogPost: MdxBlogPostConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
   allSitePlugin: SitePluginConnection;
+};
+
+
+export type QueryBlogTagArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
+  slug?: Maybe<StringQueryOperatorInput>;
+};
+
+
+export type QueryAllBlogTagArgs = {
+  filter?: Maybe<BlogTagFilterInput>;
+  sort?: Maybe<BlogTagSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 };
 
 
@@ -3566,7 +3829,7 @@ export type QueryBlogPostArgs = {
   slug?: Maybe<StringQueryOperatorInput>;
   redirectFrom?: Maybe<StringQueryOperatorInput>;
   date?: Maybe<DateQueryOperatorInput>;
-  tags?: Maybe<StringQueryOperatorInput>;
+  tags?: Maybe<BlogTagFilterListInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
   image?: Maybe<FileFilterInput>;
   imageAlt?: Maybe<StringQueryOperatorInput>;
@@ -3689,6 +3952,8 @@ export type QuerySiteArgs = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<IntQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
+  polyfill?: Maybe<BooleanQueryOperatorInput>;
+  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -3783,11 +4048,29 @@ export type QueryAllMdxArgs = {
 };
 
 
+export type QueryMdxBlogTagArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
+  slug?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+};
+
+
+export type QueryAllMdxBlogTagArgs = {
+  filter?: Maybe<MdxBlogTagFilterInput>;
+  sort?: Maybe<MdxBlogTagSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryMdxBlogPostArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  tags?: Maybe<StringQueryOperatorInput>;
+  tags?: Maybe<BlogTagFilterListInput>;
   date?: Maybe<DateQueryOperatorInput>;
   redirectFrom?: Maybe<StringQueryOperatorInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
@@ -3855,6 +4138,8 @@ export type Site = Node & {
   siteMetadata?: Maybe<SiteSiteMetadata>;
   port?: Maybe<Scalars['Int']>;
   host?: Maybe<Scalars['String']>;
+  polyfill?: Maybe<Scalars['Boolean']>;
+  pathPrefix?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -4064,6 +4349,8 @@ export enum SiteFieldsEnum {
   SiteMetadataSiteUrl = 'siteMetadata___siteUrl',
   Port = 'port',
   Host = 'host',
+  Polyfill = 'polyfill',
+  PathPrefix = 'pathPrefix',
   Id = 'id',
   ParentId = 'parent___id',
   ParentParentId = 'parent___parent___id',
@@ -4157,6 +4444,8 @@ export type SiteFilterInput = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<IntQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
+  polyfill?: Maybe<BooleanQueryOperatorInput>;
+  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -4898,8 +5187,11 @@ export type PostQuery = (
   { __typename?: 'Query' }
   & { blogPost?: Maybe<(
     { __typename?: 'MdxBlogPost' }
-    & Pick<MdxBlogPost, 'id' | 'excerpt' | 'body' | 'slug' | 'title' | 'tags' | 'date' | 'imageAlt'>
-    & { image?: Maybe<(
+    & Pick<MdxBlogPost, 'id' | 'excerpt' | 'body' | 'slug' | 'title' | 'date' | 'imageAlt'>
+    & { tags: Array<Maybe<(
+      { __typename?: 'MdxBlogTag' }
+      & Pick<MdxBlogTag, 'name' | 'slug'>
+    )>>, image?: Maybe<(
       { __typename?: 'File' }
       & { childImageSharp?: Maybe<(
         { __typename?: 'ImageSharp' }
@@ -4928,7 +5220,30 @@ export type PostsQuery = (
     { __typename?: 'BlogPostConnection' }
     & { nodes: Array<(
       { __typename?: 'MdxBlogPost' }
-      & Pick<MdxBlogPost, 'id' | 'excerpt' | 'slug' | 'title' | 'date' | 'tags'>
+      & Pick<MdxBlogPost, 'id' | 'excerpt' | 'slug' | 'title' | 'date'>
+      & { tags: Array<Maybe<(
+        { __typename?: 'MdxBlogTag' }
+        & Pick<MdxBlogTag, 'name' | 'slug'>
+      )>> }
+    )> }
+  ) }
+);
+
+export type PostsForTagQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type PostsForTagQuery = (
+  { __typename?: 'Query' }
+  & { blogTag?: Maybe<(
+    { __typename?: 'MdxBlogTag' }
+    & Pick<MdxBlogTag, 'name' | 'slug'>
+  )>, allBlogPost: (
+    { __typename?: 'BlogPostConnection' }
+    & { nodes: Array<(
+      { __typename?: 'MdxBlogPost' }
+      & Pick<MdxBlogPost, 'id' | 'excerpt' | 'slug' | 'title' | 'date'>
     )> }
   ) }
 );

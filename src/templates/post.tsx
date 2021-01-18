@@ -4,8 +4,9 @@ import { graphql } from 'gatsby';
 import { jsx, Styled } from 'theme-ui';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import Layout from '../components/layout';
-import { PostQuery } from '../graphql';
+import Layout from 'src/components/layout';
+import { TagList } from 'src/components/TagList';
+import { PostQuery } from 'src/graphql';
 
 const PostPage: React.FC<{ data: PostQuery }> = ({ data }) => {
   const post = data.blogPost;
@@ -13,6 +14,7 @@ const PostPage: React.FC<{ data: PostQuery }> = ({ data }) => {
     <Layout>
       <Styled.h1>{post.title}</Styled.h1>
       <MDXRenderer>{post.body}</MDXRenderer>
+      <TagList tags={post.tags} />
     </Layout>
   );
 };
@@ -32,7 +34,10 @@ export const query = graphql`
       body
       slug
       title
-      tags
+      tags {
+        name
+        slug
+      }
       date(formatString: "MMMM DD, YYYY")
       image {
         childImageSharp {

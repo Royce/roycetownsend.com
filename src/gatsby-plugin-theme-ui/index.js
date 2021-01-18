@@ -163,4 +163,16 @@ export default {
       px: 4,
     },
   },
+  badges: {
+    tag: {
+      borderRadius: 4,
+      px: 2,
+      color: 'text',
+      backgroundColor: 'muted',
+      ':hover,:focus': {
+        color: 'background',
+        backgroundColor: 'secondary',
+      },
+    },
+  },
 };

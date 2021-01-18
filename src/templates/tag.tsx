@@ -1,34 +1,18 @@
 /** @jsx jsx */
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import { Grid, jsx, Styled } from 'theme-ui';
+import toSlug from 'slugify';
 
 import Layout from 'src/components/layout';
-import { TagList } from 'src/components/TagList';
-import { PostsQuery } from 'src/graphql';
+import { PostsForTagQuery } from 'src/graphql';
 
-const PostListPage: React.FC = () => {
-  const data: PostsQuery = useStaticQuery(graphql`
-    query Posts {
-      allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 1000) {
-        nodes {
-          id
-          excerpt
-          slug
-          title
-          date(formatString: "MMMM DD, YYYY")
-          tags {
-            name
-            slug
-          }
-        }
-      }
-    }
-  `);
-
+const PostForTagListPage: React.FC<{ data: PostsForTagQuery }> = ({ data }) => {
   const posts = data.allBlogPost.nodes;
+  const tag = data.blogTag;
 
   return (
     <Layout>
+      <Styled.h1># {tag.name}</Styled.h1>
       <Grid
         as="ul"
         gap={4}
@@ -54,27 +38,35 @@ const PostListPage: React.FC = () => {
             </Styled.h2>
             <small sx={{ fontWeight: `bold` }}>{post.date}</small>
             <Styled.p sx={{ m: 0 }}>{post.excerpt}</Styled.p>
-            <TagList tags={post.tags} />
           </li>
         ))}
       </Grid>
+      <Styled.p sx={{ fontSize: 0, color: 'muted' }}>
+        {posts.length} Result{posts.length !== 1 && 's'} for {toSlug(tag.name)}
+      </Styled.p>
     </Layout>
   );
 };
 
-export default PostListPage;
+export default PostForTagListPage;
 
-// export const query = graphql`
-//   query Posts {
-//     allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 1000) {
-//       nodes {
-//         id
-//         excerpt
-//         slug
-//         title
-//         date(formatString: "MMMM DD, YYYY")
-//         tags
-//       }
-//     }
-//   }
-// `;
+export const query = graphql`
+  query PostsForTag($id: String!) {
+    blogTag(id: { eq: $id }) {
+      name
+      slug
+    }
+    allBlogPost(
+      filter: { tags: { elemMatch: { id: { eq: $id } } } }
+      sort: { fields: [date], order: DESC }
+    ) {
+      nodes {
+        id
+        excerpt
+        slug
+        title
+        date(formatString: "MMMM DD, YYYY")
+      }
+    }
+  }
+`;

@@ -6,8 +6,10 @@ const {
   createRemoteFileNode,
 } = require(`gatsby-source-filesystem`);
 const { urlResolve, createContentDigest, slash } = require(`gatsby-core-utils`);
+const toSlug = require('slugify');
 
 const PostTemplate = path.resolve(`./src/templates/post.tsx`);
+const TagTemplate = path.resolve(`./src/templates/tag.tsx`);
 const PostsTemplate = path.resolve(`./src/templates/posts.tsx`);
 
 const basePath = '/blog/';
@@ -62,6 +64,19 @@ const mdxResolverPassthrough = (fieldName) => async (
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
+
+  createTypes(`interface BlogTag @nodeInterface {
+    id: ID!
+    name: String!
+    slug: String!
+}`);
+
+  createTypes(`type MdxBlogTag implements Node & BlogTag {
+  id: ID!
+  name: String!
+  slug: String!
+}`);
+
   createTypes(`interface BlogPost @nodeInterface {
       id: ID!
       title: String!
@@ -69,7 +84,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       slug: String!
       redirectFrom: [String]!
       date: Date! @dateformat
-      tags: [String]!
+      tags: [BlogTag] @link(by: "name")
       excerpt: String!
       image: File
       imageAlt: String
@@ -86,7 +101,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         slug: {
           type: `String!`,
         },
-        tags: { type: `[String]!` },
+        tags: { type: `[BlogTag]!`, extensions: { link: { by: 'name' } } },
         date: { type: `Date!`, extensions: { dateformat: {} } },
         redirectFrom: { type: `[String]!` },
         excerpt: {
@@ -197,6 +212,22 @@ exports.onCreateNode = async ({
     // normalize use of trailing slash
     slug = slug.replace(/\/*$/, `/`);
 
+    if (node.frontmatter.tags) {
+      const nodeType = 'MdxBlogTag';
+
+      node.frontmatter.tags.forEach((name) => {
+        actions.createNode({
+          id: createNodeId(`${nodeType}-${name}`),
+          name,
+          slug: `${basePath}tag/${toSlug(name)}/`,
+          internal: {
+            type: nodeType,
+            contentDigest: createContentDigest(`${nodeType}-${name}`),
+          },
+        });
+      });
+    }
+
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
@@ -252,6 +283,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           redirectFrom
         }
       }
+      allBlogTag(sort: { fields: [name] }, limit: 1000) {
+        nodes {
+          id
+          slug
+        }
+      }
     }
   `);
 
@@ -302,6 +339,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         isPermanent: true,
         redirectInBrowser: true,
       });
+    });
+  });
+
+  // Create a page for each Tag
+  const tags = result.data.allBlogTag.nodes;
+
+  tags.forEach((tag) => {
+    const { slug } = tag;
+    createPage({
+      path: slug,
+      component: TagTemplate,
+      context: {
+        id: tag.id,
+      },
     });
   });
 };
