@@ -60,5 +60,15 @@ module.exports = {
         name: `content/assets`,
       },
     },
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        bucketName: 'roycetownsend.com',
+        region: 'us-east-1',
+        protocol: 'https',
+        hostname: 'roycetownsend.com',
+        generateRedirectObjectsForPermanentRedirects: true,
+      },
+    },
   ],
 };
