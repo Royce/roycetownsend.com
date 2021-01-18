@@ -1,32 +1,26 @@
 /** @jsx jsx */
 /* global process */
-import { jsx } from 'theme-ui';
-import { Link } from 'gatsby';
+import { Styled, jsx } from 'theme-ui';
 
-// markup
+import Layout from 'src/components/layout';
+
 const NotFoundPage = () => {
   return (
-    <main>
-      <title>Not found</title>
-      <h1>Page not found</h1>
+    <Layout>
+      <Styled.h1>Page not found</Styled.h1>
       <p>
         Sorry{' '}
         <span role="img" aria-label="Pensive emoji">
           😔
         </span>{' '}
         we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === 'development' ? (
-          <>
-            <br />
-            Try creating a page in <code>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
       </p>
-    </main>
+      {process.env.NODE_ENV === 'development' ? (
+        <p>
+          Try creating a page in <code>src/pages/</code>.
+        </p>
+      ) : null}
+    </Layout>
   );
 };
 
