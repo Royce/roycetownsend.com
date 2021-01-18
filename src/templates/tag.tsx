@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { graphql, Link, useStaticQuery } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import { Grid, jsx, Styled } from 'theme-ui';
 import toSlug from 'slugify';
 
