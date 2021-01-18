@@ -67,6 +67,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       title: String!
       body: String!
       slug: String!
+      redirectFrom: [String]!
       date: Date! @dateformat
       tags: [String]!
       excerpt: String!
@@ -85,8 +86,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         slug: {
           type: `String!`,
         },
-        date: { type: `Date!`, extensions: { dateformat: {} } },
         tags: { type: `[String]!` },
+        date: { type: `Date!`, extensions: { dateformat: {} } },
+        redirectFrom: { type: `[String]!` },
         excerpt: {
           type: `String!`,
           args: {
@@ -199,6 +201,7 @@ exports.onCreateNode = async ({
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
       slug,
+      redirectFrom: node.frontmatter.redirectFrom || [],
       date: node.frontmatter.date,
       image: node.frontmatter.image,
     };
@@ -238,7 +241,7 @@ exports.onCreateNode = async ({
 };
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions;
+  const { createPage, createRedirect } = actions;
 
   const result = await graphql(`
     {
@@ -246,6 +249,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         nodes {
           id
           slug
+          redirectFrom
         }
       }
     }
@@ -258,12 +262,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Create Posts and Post pages.
   const { allBlogPost } = result.data;
   const posts = allBlogPost.nodes;
+  const redirects = [];
 
   // Create a page for each Post
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1];
     const next = index === 0 ? null : posts[index - 1];
-    const { slug } = post;
+    const { slug, redirectFrom } = post;
     createPage({
       path: slug,
       component: PostTemplate,
@@ -274,6 +279,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         maxWidth: imageMaxWidth,
       },
     });
+    redirects.push({
+      from: redirectFrom,
+      to: slug,
+    });
   });
 
   // // Create the Posts page
@@ -281,5 +290,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     path: basePath,
     component: PostsTemplate,
     context: {},
+  });
+
+  // Create redirects from the just constructed array
+  redirects.forEach(({ from, to }) => {
+    // iterate through all `from` array items
+    from.forEach((from) => {
+      createRedirect({
+        fromPath: from,
+        toPath: to,
+        isPermanent: true,
+        redirectInBrowser: true,
+      });
+    });
   });
 };

@@ -36,6 +36,7 @@ export type BlogPost = {
   title: Scalars['String'];
   body: Scalars['String'];
   slug: Scalars['String'];
+  redirectFrom: Array<Maybe<Scalars['String']>>;
   date: Scalars['Date'];
   tags: Array<Maybe<Scalars['String']>>;
   excerpt: Scalars['String'];
@@ -85,6 +86,7 @@ export enum BlogPostFieldsEnum {
   Title = 'title',
   Body = 'body',
   Slug = 'slug',
+  RedirectFrom = 'redirectFrom',
   Date = 'date',
   Tags = 'tags',
   Excerpt = 'excerpt',
@@ -121,7 +123,6 @@ export enum BlogPostFieldsEnum {
   ImageBirthtimeMs = 'image___birthtimeMs',
   ImageBlksize = 'image___blksize',
   ImageBlocks = 'image___blocks',
-  ImageUrl = 'image___url',
   ImagePublicUrl = 'image___publicURL',
   ImageChildrenImageSharp = 'image___childrenImageSharp',
   ImageChildrenImageSharpFixedBase64 = 'image___childrenImageSharp___fixed___base64',
@@ -264,9 +265,11 @@ export enum BlogPostFieldsEnum {
   ImageChildrenMdxRawBody = 'image___childrenMdx___rawBody',
   ImageChildrenMdxFileAbsolutePath = 'image___childrenMdx___fileAbsolutePath',
   ImageChildrenMdxFrontmatterTitle = 'image___childrenMdx___frontmatter___title',
+  ImageChildrenMdxFrontmatterExcerpt = 'image___childrenMdx___frontmatter___excerpt',
   ImageChildrenMdxFrontmatterDate = 'image___childrenMdx___frontmatter___date',
-  ImageChildrenMdxFrontmatterImage = 'image___childrenMdx___frontmatter___image',
   ImageChildrenMdxFrontmatterImageAlt = 'image___childrenMdx___frontmatter___imageAlt',
+  ImageChildrenMdxFrontmatterTags = 'image___childrenMdx___frontmatter___tags',
+  ImageChildrenMdxFrontmatterRedirectFrom = 'image___childrenMdx___frontmatter___redirectFrom',
   ImageChildrenMdxSlug = 'image___childrenMdx___slug',
   ImageChildrenMdxBody = 'image___childrenMdx___body',
   ImageChildrenMdxExcerpt = 'image___childrenMdx___excerpt',
@@ -284,8 +287,9 @@ export enum BlogPostFieldsEnum {
   ImageChildrenMdxChildrenMdxBlogPostId = 'image___childrenMdx___childrenMdxBlogPost___id',
   ImageChildrenMdxChildrenMdxBlogPostTitle = 'image___childrenMdx___childrenMdxBlogPost___title',
   ImageChildrenMdxChildrenMdxBlogPostSlug = 'image___childrenMdx___childrenMdxBlogPost___slug',
-  ImageChildrenMdxChildrenMdxBlogPostDate = 'image___childrenMdx___childrenMdxBlogPost___date',
   ImageChildrenMdxChildrenMdxBlogPostTags = 'image___childrenMdx___childrenMdxBlogPost___tags',
+  ImageChildrenMdxChildrenMdxBlogPostDate = 'image___childrenMdx___childrenMdxBlogPost___date',
+  ImageChildrenMdxChildrenMdxBlogPostRedirectFrom = 'image___childrenMdx___childrenMdxBlogPost___redirectFrom',
   ImageChildrenMdxChildrenMdxBlogPostExcerpt = 'image___childrenMdx___childrenMdxBlogPost___excerpt',
   ImageChildrenMdxChildrenMdxBlogPostImageAlt = 'image___childrenMdx___childrenMdxBlogPost___imageAlt',
   ImageChildrenMdxChildrenMdxBlogPostBody = 'image___childrenMdx___childrenMdxBlogPost___body',
@@ -293,8 +297,9 @@ export enum BlogPostFieldsEnum {
   ImageChildrenMdxChildMdxBlogPostId = 'image___childrenMdx___childMdxBlogPost___id',
   ImageChildrenMdxChildMdxBlogPostTitle = 'image___childrenMdx___childMdxBlogPost___title',
   ImageChildrenMdxChildMdxBlogPostSlug = 'image___childrenMdx___childMdxBlogPost___slug',
-  ImageChildrenMdxChildMdxBlogPostDate = 'image___childrenMdx___childMdxBlogPost___date',
   ImageChildrenMdxChildMdxBlogPostTags = 'image___childrenMdx___childMdxBlogPost___tags',
+  ImageChildrenMdxChildMdxBlogPostDate = 'image___childrenMdx___childMdxBlogPost___date',
+  ImageChildrenMdxChildMdxBlogPostRedirectFrom = 'image___childrenMdx___childMdxBlogPost___redirectFrom',
   ImageChildrenMdxChildMdxBlogPostExcerpt = 'image___childrenMdx___childMdxBlogPost___excerpt',
   ImageChildrenMdxChildMdxBlogPostImageAlt = 'image___childrenMdx___childMdxBlogPost___imageAlt',
   ImageChildrenMdxChildMdxBlogPostBody = 'image___childrenMdx___childMdxBlogPost___body',
@@ -316,9 +321,11 @@ export enum BlogPostFieldsEnum {
   ImageChildMdxRawBody = 'image___childMdx___rawBody',
   ImageChildMdxFileAbsolutePath = 'image___childMdx___fileAbsolutePath',
   ImageChildMdxFrontmatterTitle = 'image___childMdx___frontmatter___title',
+  ImageChildMdxFrontmatterExcerpt = 'image___childMdx___frontmatter___excerpt',
   ImageChildMdxFrontmatterDate = 'image___childMdx___frontmatter___date',
-  ImageChildMdxFrontmatterImage = 'image___childMdx___frontmatter___image',
   ImageChildMdxFrontmatterImageAlt = 'image___childMdx___frontmatter___imageAlt',
+  ImageChildMdxFrontmatterTags = 'image___childMdx___frontmatter___tags',
+  ImageChildMdxFrontmatterRedirectFrom = 'image___childMdx___frontmatter___redirectFrom',
   ImageChildMdxSlug = 'image___childMdx___slug',
   ImageChildMdxBody = 'image___childMdx___body',
   ImageChildMdxExcerpt = 'image___childMdx___excerpt',
@@ -336,8 +343,9 @@ export enum BlogPostFieldsEnum {
   ImageChildMdxChildrenMdxBlogPostId = 'image___childMdx___childrenMdxBlogPost___id',
   ImageChildMdxChildrenMdxBlogPostTitle = 'image___childMdx___childrenMdxBlogPost___title',
   ImageChildMdxChildrenMdxBlogPostSlug = 'image___childMdx___childrenMdxBlogPost___slug',
-  ImageChildMdxChildrenMdxBlogPostDate = 'image___childMdx___childrenMdxBlogPost___date',
   ImageChildMdxChildrenMdxBlogPostTags = 'image___childMdx___childrenMdxBlogPost___tags',
+  ImageChildMdxChildrenMdxBlogPostDate = 'image___childMdx___childrenMdxBlogPost___date',
+  ImageChildMdxChildrenMdxBlogPostRedirectFrom = 'image___childMdx___childrenMdxBlogPost___redirectFrom',
   ImageChildMdxChildrenMdxBlogPostExcerpt = 'image___childMdx___childrenMdxBlogPost___excerpt',
   ImageChildMdxChildrenMdxBlogPostImageAlt = 'image___childMdx___childrenMdxBlogPost___imageAlt',
   ImageChildMdxChildrenMdxBlogPostBody = 'image___childMdx___childrenMdxBlogPost___body',
@@ -345,8 +353,9 @@ export enum BlogPostFieldsEnum {
   ImageChildMdxChildMdxBlogPostId = 'image___childMdx___childMdxBlogPost___id',
   ImageChildMdxChildMdxBlogPostTitle = 'image___childMdx___childMdxBlogPost___title',
   ImageChildMdxChildMdxBlogPostSlug = 'image___childMdx___childMdxBlogPost___slug',
-  ImageChildMdxChildMdxBlogPostDate = 'image___childMdx___childMdxBlogPost___date',
   ImageChildMdxChildMdxBlogPostTags = 'image___childMdx___childMdxBlogPost___tags',
+  ImageChildMdxChildMdxBlogPostDate = 'image___childMdx___childMdxBlogPost___date',
+  ImageChildMdxChildMdxBlogPostRedirectFrom = 'image___childMdx___childMdxBlogPost___redirectFrom',
   ImageChildMdxChildMdxBlogPostExcerpt = 'image___childMdx___childMdxBlogPost___excerpt',
   ImageChildMdxChildMdxBlogPostImageAlt = 'image___childMdx___childMdxBlogPost___imageAlt',
   ImageChildMdxChildMdxBlogPostBody = 'image___childMdx___childMdxBlogPost___body',
@@ -411,6 +420,7 @@ export type BlogPostFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
   body?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
+  redirectFrom?: Maybe<StringQueryOperatorInput>;
   date?: Maybe<DateQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
@@ -810,7 +820,6 @@ export type File = Node & {
   birthtimeMs?: Maybe<Scalars['Float']>;
   blksize?: Maybe<Scalars['Int']>;
   blocks?: Maybe<Scalars['Int']>;
-  url?: Maybe<Scalars['String']>;
   /** Copy file to static directory and return public url to it */
   publicURL?: Maybe<Scalars['String']>;
   /** Returns all children nodes filtered by type ImageSharp */
@@ -946,7 +955,6 @@ export enum FileFieldsEnum {
   BirthtimeMs = 'birthtimeMs',
   Blksize = 'blksize',
   Blocks = 'blocks',
-  Url = 'url',
   PublicUrl = 'publicURL',
   ChildrenImageSharp = 'childrenImageSharp',
   ChildrenImageSharpFixedBase64 = 'childrenImageSharp___fixed___base64',
@@ -1137,9 +1145,49 @@ export enum FileFieldsEnum {
   ChildrenMdxRawBody = 'childrenMdx___rawBody',
   ChildrenMdxFileAbsolutePath = 'childrenMdx___fileAbsolutePath',
   ChildrenMdxFrontmatterTitle = 'childrenMdx___frontmatter___title',
+  ChildrenMdxFrontmatterExcerpt = 'childrenMdx___frontmatter___excerpt',
   ChildrenMdxFrontmatterDate = 'childrenMdx___frontmatter___date',
-  ChildrenMdxFrontmatterImage = 'childrenMdx___frontmatter___image',
+  ChildrenMdxFrontmatterImageSourceInstanceName = 'childrenMdx___frontmatter___image___sourceInstanceName',
+  ChildrenMdxFrontmatterImageAbsolutePath = 'childrenMdx___frontmatter___image___absolutePath',
+  ChildrenMdxFrontmatterImageRelativePath = 'childrenMdx___frontmatter___image___relativePath',
+  ChildrenMdxFrontmatterImageExtension = 'childrenMdx___frontmatter___image___extension',
+  ChildrenMdxFrontmatterImageSize = 'childrenMdx___frontmatter___image___size',
+  ChildrenMdxFrontmatterImagePrettySize = 'childrenMdx___frontmatter___image___prettySize',
+  ChildrenMdxFrontmatterImageModifiedTime = 'childrenMdx___frontmatter___image___modifiedTime',
+  ChildrenMdxFrontmatterImageAccessTime = 'childrenMdx___frontmatter___image___accessTime',
+  ChildrenMdxFrontmatterImageChangeTime = 'childrenMdx___frontmatter___image___changeTime',
+  ChildrenMdxFrontmatterImageBirthTime = 'childrenMdx___frontmatter___image___birthTime',
+  ChildrenMdxFrontmatterImageRoot = 'childrenMdx___frontmatter___image___root',
+  ChildrenMdxFrontmatterImageDir = 'childrenMdx___frontmatter___image___dir',
+  ChildrenMdxFrontmatterImageBase = 'childrenMdx___frontmatter___image___base',
+  ChildrenMdxFrontmatterImageExt = 'childrenMdx___frontmatter___image___ext',
+  ChildrenMdxFrontmatterImageName = 'childrenMdx___frontmatter___image___name',
+  ChildrenMdxFrontmatterImageRelativeDirectory = 'childrenMdx___frontmatter___image___relativeDirectory',
+  ChildrenMdxFrontmatterImageDev = 'childrenMdx___frontmatter___image___dev',
+  ChildrenMdxFrontmatterImageMode = 'childrenMdx___frontmatter___image___mode',
+  ChildrenMdxFrontmatterImageNlink = 'childrenMdx___frontmatter___image___nlink',
+  ChildrenMdxFrontmatterImageUid = 'childrenMdx___frontmatter___image___uid',
+  ChildrenMdxFrontmatterImageGid = 'childrenMdx___frontmatter___image___gid',
+  ChildrenMdxFrontmatterImageRdev = 'childrenMdx___frontmatter___image___rdev',
+  ChildrenMdxFrontmatterImageIno = 'childrenMdx___frontmatter___image___ino',
+  ChildrenMdxFrontmatterImageAtimeMs = 'childrenMdx___frontmatter___image___atimeMs',
+  ChildrenMdxFrontmatterImageMtimeMs = 'childrenMdx___frontmatter___image___mtimeMs',
+  ChildrenMdxFrontmatterImageCtimeMs = 'childrenMdx___frontmatter___image___ctimeMs',
+  ChildrenMdxFrontmatterImageAtime = 'childrenMdx___frontmatter___image___atime',
+  ChildrenMdxFrontmatterImageMtime = 'childrenMdx___frontmatter___image___mtime',
+  ChildrenMdxFrontmatterImageCtime = 'childrenMdx___frontmatter___image___ctime',
+  ChildrenMdxFrontmatterImageBirthtime = 'childrenMdx___frontmatter___image___birthtime',
+  ChildrenMdxFrontmatterImageBirthtimeMs = 'childrenMdx___frontmatter___image___birthtimeMs',
+  ChildrenMdxFrontmatterImageBlksize = 'childrenMdx___frontmatter___image___blksize',
+  ChildrenMdxFrontmatterImageBlocks = 'childrenMdx___frontmatter___image___blocks',
+  ChildrenMdxFrontmatterImagePublicUrl = 'childrenMdx___frontmatter___image___publicURL',
+  ChildrenMdxFrontmatterImageChildrenImageSharp = 'childrenMdx___frontmatter___image___childrenImageSharp',
+  ChildrenMdxFrontmatterImageChildrenMdx = 'childrenMdx___frontmatter___image___childrenMdx',
+  ChildrenMdxFrontmatterImageId = 'childrenMdx___frontmatter___image___id',
+  ChildrenMdxFrontmatterImageChildren = 'childrenMdx___frontmatter___image___children',
   ChildrenMdxFrontmatterImageAlt = 'childrenMdx___frontmatter___imageAlt',
+  ChildrenMdxFrontmatterTags = 'childrenMdx___frontmatter___tags',
+  ChildrenMdxFrontmatterRedirectFrom = 'childrenMdx___frontmatter___redirectFrom',
   ChildrenMdxSlug = 'childrenMdx___slug',
   ChildrenMdxBody = 'childrenMdx___body',
   ChildrenMdxExcerpt = 'childrenMdx___excerpt',
@@ -1157,8 +1205,9 @@ export enum FileFieldsEnum {
   ChildrenMdxChildrenMdxBlogPostId = 'childrenMdx___childrenMdxBlogPost___id',
   ChildrenMdxChildrenMdxBlogPostTitle = 'childrenMdx___childrenMdxBlogPost___title',
   ChildrenMdxChildrenMdxBlogPostSlug = 'childrenMdx___childrenMdxBlogPost___slug',
-  ChildrenMdxChildrenMdxBlogPostDate = 'childrenMdx___childrenMdxBlogPost___date',
   ChildrenMdxChildrenMdxBlogPostTags = 'childrenMdx___childrenMdxBlogPost___tags',
+  ChildrenMdxChildrenMdxBlogPostDate = 'childrenMdx___childrenMdxBlogPost___date',
+  ChildrenMdxChildrenMdxBlogPostRedirectFrom = 'childrenMdx___childrenMdxBlogPost___redirectFrom',
   ChildrenMdxChildrenMdxBlogPostExcerpt = 'childrenMdx___childrenMdxBlogPost___excerpt',
   ChildrenMdxChildrenMdxBlogPostImageSourceInstanceName = 'childrenMdx___childrenMdxBlogPost___image___sourceInstanceName',
   ChildrenMdxChildrenMdxBlogPostImageAbsolutePath = 'childrenMdx___childrenMdxBlogPost___image___absolutePath',
@@ -1193,7 +1242,6 @@ export enum FileFieldsEnum {
   ChildrenMdxChildrenMdxBlogPostImageBirthtimeMs = 'childrenMdx___childrenMdxBlogPost___image___birthtimeMs',
   ChildrenMdxChildrenMdxBlogPostImageBlksize = 'childrenMdx___childrenMdxBlogPost___image___blksize',
   ChildrenMdxChildrenMdxBlogPostImageBlocks = 'childrenMdx___childrenMdxBlogPost___image___blocks',
-  ChildrenMdxChildrenMdxBlogPostImageUrl = 'childrenMdx___childrenMdxBlogPost___image___url',
   ChildrenMdxChildrenMdxBlogPostImagePublicUrl = 'childrenMdx___childrenMdxBlogPost___image___publicURL',
   ChildrenMdxChildrenMdxBlogPostImageChildrenImageSharp = 'childrenMdx___childrenMdxBlogPost___image___childrenImageSharp',
   ChildrenMdxChildrenMdxBlogPostImageChildrenMdx = 'childrenMdx___childrenMdxBlogPost___image___childrenMdx',
@@ -1217,8 +1265,9 @@ export enum FileFieldsEnum {
   ChildrenMdxChildMdxBlogPostId = 'childrenMdx___childMdxBlogPost___id',
   ChildrenMdxChildMdxBlogPostTitle = 'childrenMdx___childMdxBlogPost___title',
   ChildrenMdxChildMdxBlogPostSlug = 'childrenMdx___childMdxBlogPost___slug',
-  ChildrenMdxChildMdxBlogPostDate = 'childrenMdx___childMdxBlogPost___date',
   ChildrenMdxChildMdxBlogPostTags = 'childrenMdx___childMdxBlogPost___tags',
+  ChildrenMdxChildMdxBlogPostDate = 'childrenMdx___childMdxBlogPost___date',
+  ChildrenMdxChildMdxBlogPostRedirectFrom = 'childrenMdx___childMdxBlogPost___redirectFrom',
   ChildrenMdxChildMdxBlogPostExcerpt = 'childrenMdx___childMdxBlogPost___excerpt',
   ChildrenMdxChildMdxBlogPostImageSourceInstanceName = 'childrenMdx___childMdxBlogPost___image___sourceInstanceName',
   ChildrenMdxChildMdxBlogPostImageAbsolutePath = 'childrenMdx___childMdxBlogPost___image___absolutePath',
@@ -1253,7 +1302,6 @@ export enum FileFieldsEnum {
   ChildrenMdxChildMdxBlogPostImageBirthtimeMs = 'childrenMdx___childMdxBlogPost___image___birthtimeMs',
   ChildrenMdxChildMdxBlogPostImageBlksize = 'childrenMdx___childMdxBlogPost___image___blksize',
   ChildrenMdxChildMdxBlogPostImageBlocks = 'childrenMdx___childMdxBlogPost___image___blocks',
-  ChildrenMdxChildMdxBlogPostImageUrl = 'childrenMdx___childMdxBlogPost___image___url',
   ChildrenMdxChildMdxBlogPostImagePublicUrl = 'childrenMdx___childMdxBlogPost___image___publicURL',
   ChildrenMdxChildMdxBlogPostImageChildrenImageSharp = 'childrenMdx___childMdxBlogPost___image___childrenImageSharp',
   ChildrenMdxChildMdxBlogPostImageChildrenMdx = 'childrenMdx___childMdxBlogPost___image___childrenMdx',
@@ -1315,9 +1363,49 @@ export enum FileFieldsEnum {
   ChildMdxRawBody = 'childMdx___rawBody',
   ChildMdxFileAbsolutePath = 'childMdx___fileAbsolutePath',
   ChildMdxFrontmatterTitle = 'childMdx___frontmatter___title',
+  ChildMdxFrontmatterExcerpt = 'childMdx___frontmatter___excerpt',
   ChildMdxFrontmatterDate = 'childMdx___frontmatter___date',
-  ChildMdxFrontmatterImage = 'childMdx___frontmatter___image',
+  ChildMdxFrontmatterImageSourceInstanceName = 'childMdx___frontmatter___image___sourceInstanceName',
+  ChildMdxFrontmatterImageAbsolutePath = 'childMdx___frontmatter___image___absolutePath',
+  ChildMdxFrontmatterImageRelativePath = 'childMdx___frontmatter___image___relativePath',
+  ChildMdxFrontmatterImageExtension = 'childMdx___frontmatter___image___extension',
+  ChildMdxFrontmatterImageSize = 'childMdx___frontmatter___image___size',
+  ChildMdxFrontmatterImagePrettySize = 'childMdx___frontmatter___image___prettySize',
+  ChildMdxFrontmatterImageModifiedTime = 'childMdx___frontmatter___image___modifiedTime',
+  ChildMdxFrontmatterImageAccessTime = 'childMdx___frontmatter___image___accessTime',
+  ChildMdxFrontmatterImageChangeTime = 'childMdx___frontmatter___image___changeTime',
+  ChildMdxFrontmatterImageBirthTime = 'childMdx___frontmatter___image___birthTime',
+  ChildMdxFrontmatterImageRoot = 'childMdx___frontmatter___image___root',
+  ChildMdxFrontmatterImageDir = 'childMdx___frontmatter___image___dir',
+  ChildMdxFrontmatterImageBase = 'childMdx___frontmatter___image___base',
+  ChildMdxFrontmatterImageExt = 'childMdx___frontmatter___image___ext',
+  ChildMdxFrontmatterImageName = 'childMdx___frontmatter___image___name',
+  ChildMdxFrontmatterImageRelativeDirectory = 'childMdx___frontmatter___image___relativeDirectory',
+  ChildMdxFrontmatterImageDev = 'childMdx___frontmatter___image___dev',
+  ChildMdxFrontmatterImageMode = 'childMdx___frontmatter___image___mode',
+  ChildMdxFrontmatterImageNlink = 'childMdx___frontmatter___image___nlink',
+  ChildMdxFrontmatterImageUid = 'childMdx___frontmatter___image___uid',
+  ChildMdxFrontmatterImageGid = 'childMdx___frontmatter___image___gid',
+  ChildMdxFrontmatterImageRdev = 'childMdx___frontmatter___image___rdev',
+  ChildMdxFrontmatterImageIno = 'childMdx___frontmatter___image___ino',
+  ChildMdxFrontmatterImageAtimeMs = 'childMdx___frontmatter___image___atimeMs',
+  ChildMdxFrontmatterImageMtimeMs = 'childMdx___frontmatter___image___mtimeMs',
+  ChildMdxFrontmatterImageCtimeMs = 'childMdx___frontmatter___image___ctimeMs',
+  ChildMdxFrontmatterImageAtime = 'childMdx___frontmatter___image___atime',
+  ChildMdxFrontmatterImageMtime = 'childMdx___frontmatter___image___mtime',
+  ChildMdxFrontmatterImageCtime = 'childMdx___frontmatter___image___ctime',
+  ChildMdxFrontmatterImageBirthtime = 'childMdx___frontmatter___image___birthtime',
+  ChildMdxFrontmatterImageBirthtimeMs = 'childMdx___frontmatter___image___birthtimeMs',
+  ChildMdxFrontmatterImageBlksize = 'childMdx___frontmatter___image___blksize',
+  ChildMdxFrontmatterImageBlocks = 'childMdx___frontmatter___image___blocks',
+  ChildMdxFrontmatterImagePublicUrl = 'childMdx___frontmatter___image___publicURL',
+  ChildMdxFrontmatterImageChildrenImageSharp = 'childMdx___frontmatter___image___childrenImageSharp',
+  ChildMdxFrontmatterImageChildrenMdx = 'childMdx___frontmatter___image___childrenMdx',
+  ChildMdxFrontmatterImageId = 'childMdx___frontmatter___image___id',
+  ChildMdxFrontmatterImageChildren = 'childMdx___frontmatter___image___children',
   ChildMdxFrontmatterImageAlt = 'childMdx___frontmatter___imageAlt',
+  ChildMdxFrontmatterTags = 'childMdx___frontmatter___tags',
+  ChildMdxFrontmatterRedirectFrom = 'childMdx___frontmatter___redirectFrom',
   ChildMdxSlug = 'childMdx___slug',
   ChildMdxBody = 'childMdx___body',
   ChildMdxExcerpt = 'childMdx___excerpt',
@@ -1335,8 +1423,9 @@ export enum FileFieldsEnum {
   ChildMdxChildrenMdxBlogPostId = 'childMdx___childrenMdxBlogPost___id',
   ChildMdxChildrenMdxBlogPostTitle = 'childMdx___childrenMdxBlogPost___title',
   ChildMdxChildrenMdxBlogPostSlug = 'childMdx___childrenMdxBlogPost___slug',
-  ChildMdxChildrenMdxBlogPostDate = 'childMdx___childrenMdxBlogPost___date',
   ChildMdxChildrenMdxBlogPostTags = 'childMdx___childrenMdxBlogPost___tags',
+  ChildMdxChildrenMdxBlogPostDate = 'childMdx___childrenMdxBlogPost___date',
+  ChildMdxChildrenMdxBlogPostRedirectFrom = 'childMdx___childrenMdxBlogPost___redirectFrom',
   ChildMdxChildrenMdxBlogPostExcerpt = 'childMdx___childrenMdxBlogPost___excerpt',
   ChildMdxChildrenMdxBlogPostImageSourceInstanceName = 'childMdx___childrenMdxBlogPost___image___sourceInstanceName',
   ChildMdxChildrenMdxBlogPostImageAbsolutePath = 'childMdx___childrenMdxBlogPost___image___absolutePath',
@@ -1371,7 +1460,6 @@ export enum FileFieldsEnum {
   ChildMdxChildrenMdxBlogPostImageBirthtimeMs = 'childMdx___childrenMdxBlogPost___image___birthtimeMs',
   ChildMdxChildrenMdxBlogPostImageBlksize = 'childMdx___childrenMdxBlogPost___image___blksize',
   ChildMdxChildrenMdxBlogPostImageBlocks = 'childMdx___childrenMdxBlogPost___image___blocks',
-  ChildMdxChildrenMdxBlogPostImageUrl = 'childMdx___childrenMdxBlogPost___image___url',
   ChildMdxChildrenMdxBlogPostImagePublicUrl = 'childMdx___childrenMdxBlogPost___image___publicURL',
   ChildMdxChildrenMdxBlogPostImageChildrenImageSharp = 'childMdx___childrenMdxBlogPost___image___childrenImageSharp',
   ChildMdxChildrenMdxBlogPostImageChildrenMdx = 'childMdx___childrenMdxBlogPost___image___childrenMdx',
@@ -1395,8 +1483,9 @@ export enum FileFieldsEnum {
   ChildMdxChildMdxBlogPostId = 'childMdx___childMdxBlogPost___id',
   ChildMdxChildMdxBlogPostTitle = 'childMdx___childMdxBlogPost___title',
   ChildMdxChildMdxBlogPostSlug = 'childMdx___childMdxBlogPost___slug',
-  ChildMdxChildMdxBlogPostDate = 'childMdx___childMdxBlogPost___date',
   ChildMdxChildMdxBlogPostTags = 'childMdx___childMdxBlogPost___tags',
+  ChildMdxChildMdxBlogPostDate = 'childMdx___childMdxBlogPost___date',
+  ChildMdxChildMdxBlogPostRedirectFrom = 'childMdx___childMdxBlogPost___redirectFrom',
   ChildMdxChildMdxBlogPostExcerpt = 'childMdx___childMdxBlogPost___excerpt',
   ChildMdxChildMdxBlogPostImageSourceInstanceName = 'childMdx___childMdxBlogPost___image___sourceInstanceName',
   ChildMdxChildMdxBlogPostImageAbsolutePath = 'childMdx___childMdxBlogPost___image___absolutePath',
@@ -1431,7 +1520,6 @@ export enum FileFieldsEnum {
   ChildMdxChildMdxBlogPostImageBirthtimeMs = 'childMdx___childMdxBlogPost___image___birthtimeMs',
   ChildMdxChildMdxBlogPostImageBlksize = 'childMdx___childMdxBlogPost___image___blksize',
   ChildMdxChildMdxBlogPostImageBlocks = 'childMdx___childMdxBlogPost___image___blocks',
-  ChildMdxChildMdxBlogPostImageUrl = 'childMdx___childMdxBlogPost___image___url',
   ChildMdxChildMdxBlogPostImagePublicUrl = 'childMdx___childMdxBlogPost___image___publicURL',
   ChildMdxChildMdxBlogPostImageChildrenImageSharp = 'childMdx___childMdxBlogPost___image___childrenImageSharp',
   ChildMdxChildMdxBlogPostImageChildrenMdx = 'childMdx___childMdxBlogPost___image___childrenMdx',
@@ -1612,7 +1700,6 @@ export type FileFilterInput = {
   birthtimeMs?: Maybe<FloatQueryOperatorInput>;
   blksize?: Maybe<IntQueryOperatorInput>;
   blocks?: Maybe<IntQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
   publicURL?: Maybe<StringQueryOperatorInput>;
   childrenImageSharp?: Maybe<ImageSharpFilterListInput>;
   childImageSharp?: Maybe<ImageSharpFilterInput>;
@@ -2308,8 +2395,9 @@ export type MdxBlogPost = Node & BlogPost & {
   id: Scalars['ID'];
   title: Scalars['String'];
   slug: Scalars['String'];
-  date: Scalars['Date'];
   tags: Array<Maybe<Scalars['String']>>;
+  date: Scalars['Date'];
+  redirectFrom: Array<Maybe<Scalars['String']>>;
   excerpt: Scalars['String'];
   image?: Maybe<File>;
   imageAlt?: Maybe<Scalars['String']>;
@@ -2365,8 +2453,9 @@ export enum MdxBlogPostFieldsEnum {
   Id = 'id',
   Title = 'title',
   Slug = 'slug',
-  Date = 'date',
   Tags = 'tags',
+  Date = 'date',
+  RedirectFrom = 'redirectFrom',
   Excerpt = 'excerpt',
   ImageSourceInstanceName = 'image___sourceInstanceName',
   ImageAbsolutePath = 'image___absolutePath',
@@ -2401,7 +2490,6 @@ export enum MdxBlogPostFieldsEnum {
   ImageBirthtimeMs = 'image___birthtimeMs',
   ImageBlksize = 'image___blksize',
   ImageBlocks = 'image___blocks',
-  ImageUrl = 'image___url',
   ImagePublicUrl = 'image___publicURL',
   ImageChildrenImageSharp = 'image___childrenImageSharp',
   ImageChildrenImageSharpFixedBase64 = 'image___childrenImageSharp___fixed___base64',
@@ -2544,9 +2632,11 @@ export enum MdxBlogPostFieldsEnum {
   ImageChildrenMdxRawBody = 'image___childrenMdx___rawBody',
   ImageChildrenMdxFileAbsolutePath = 'image___childrenMdx___fileAbsolutePath',
   ImageChildrenMdxFrontmatterTitle = 'image___childrenMdx___frontmatter___title',
+  ImageChildrenMdxFrontmatterExcerpt = 'image___childrenMdx___frontmatter___excerpt',
   ImageChildrenMdxFrontmatterDate = 'image___childrenMdx___frontmatter___date',
-  ImageChildrenMdxFrontmatterImage = 'image___childrenMdx___frontmatter___image',
   ImageChildrenMdxFrontmatterImageAlt = 'image___childrenMdx___frontmatter___imageAlt',
+  ImageChildrenMdxFrontmatterTags = 'image___childrenMdx___frontmatter___tags',
+  ImageChildrenMdxFrontmatterRedirectFrom = 'image___childrenMdx___frontmatter___redirectFrom',
   ImageChildrenMdxSlug = 'image___childrenMdx___slug',
   ImageChildrenMdxBody = 'image___childrenMdx___body',
   ImageChildrenMdxExcerpt = 'image___childrenMdx___excerpt',
@@ -2564,8 +2654,9 @@ export enum MdxBlogPostFieldsEnum {
   ImageChildrenMdxChildrenMdxBlogPostId = 'image___childrenMdx___childrenMdxBlogPost___id',
   ImageChildrenMdxChildrenMdxBlogPostTitle = 'image___childrenMdx___childrenMdxBlogPost___title',
   ImageChildrenMdxChildrenMdxBlogPostSlug = 'image___childrenMdx___childrenMdxBlogPost___slug',
-  ImageChildrenMdxChildrenMdxBlogPostDate = 'image___childrenMdx___childrenMdxBlogPost___date',
   ImageChildrenMdxChildrenMdxBlogPostTags = 'image___childrenMdx___childrenMdxBlogPost___tags',
+  ImageChildrenMdxChildrenMdxBlogPostDate = 'image___childrenMdx___childrenMdxBlogPost___date',
+  ImageChildrenMdxChildrenMdxBlogPostRedirectFrom = 'image___childrenMdx___childrenMdxBlogPost___redirectFrom',
   ImageChildrenMdxChildrenMdxBlogPostExcerpt = 'image___childrenMdx___childrenMdxBlogPost___excerpt',
   ImageChildrenMdxChildrenMdxBlogPostImageAlt = 'image___childrenMdx___childrenMdxBlogPost___imageAlt',
   ImageChildrenMdxChildrenMdxBlogPostBody = 'image___childrenMdx___childrenMdxBlogPost___body',
@@ -2573,8 +2664,9 @@ export enum MdxBlogPostFieldsEnum {
   ImageChildrenMdxChildMdxBlogPostId = 'image___childrenMdx___childMdxBlogPost___id',
   ImageChildrenMdxChildMdxBlogPostTitle = 'image___childrenMdx___childMdxBlogPost___title',
   ImageChildrenMdxChildMdxBlogPostSlug = 'image___childrenMdx___childMdxBlogPost___slug',
-  ImageChildrenMdxChildMdxBlogPostDate = 'image___childrenMdx___childMdxBlogPost___date',
   ImageChildrenMdxChildMdxBlogPostTags = 'image___childrenMdx___childMdxBlogPost___tags',
+  ImageChildrenMdxChildMdxBlogPostDate = 'image___childrenMdx___childMdxBlogPost___date',
+  ImageChildrenMdxChildMdxBlogPostRedirectFrom = 'image___childrenMdx___childMdxBlogPost___redirectFrom',
   ImageChildrenMdxChildMdxBlogPostExcerpt = 'image___childrenMdx___childMdxBlogPost___excerpt',
   ImageChildrenMdxChildMdxBlogPostImageAlt = 'image___childrenMdx___childMdxBlogPost___imageAlt',
   ImageChildrenMdxChildMdxBlogPostBody = 'image___childrenMdx___childMdxBlogPost___body',
@@ -2596,9 +2688,11 @@ export enum MdxBlogPostFieldsEnum {
   ImageChildMdxRawBody = 'image___childMdx___rawBody',
   ImageChildMdxFileAbsolutePath = 'image___childMdx___fileAbsolutePath',
   ImageChildMdxFrontmatterTitle = 'image___childMdx___frontmatter___title',
+  ImageChildMdxFrontmatterExcerpt = 'image___childMdx___frontmatter___excerpt',
   ImageChildMdxFrontmatterDate = 'image___childMdx___frontmatter___date',
-  ImageChildMdxFrontmatterImage = 'image___childMdx___frontmatter___image',
   ImageChildMdxFrontmatterImageAlt = 'image___childMdx___frontmatter___imageAlt',
+  ImageChildMdxFrontmatterTags = 'image___childMdx___frontmatter___tags',
+  ImageChildMdxFrontmatterRedirectFrom = 'image___childMdx___frontmatter___redirectFrom',
   ImageChildMdxSlug = 'image___childMdx___slug',
   ImageChildMdxBody = 'image___childMdx___body',
   ImageChildMdxExcerpt = 'image___childMdx___excerpt',
@@ -2616,8 +2710,9 @@ export enum MdxBlogPostFieldsEnum {
   ImageChildMdxChildrenMdxBlogPostId = 'image___childMdx___childrenMdxBlogPost___id',
   ImageChildMdxChildrenMdxBlogPostTitle = 'image___childMdx___childrenMdxBlogPost___title',
   ImageChildMdxChildrenMdxBlogPostSlug = 'image___childMdx___childrenMdxBlogPost___slug',
-  ImageChildMdxChildrenMdxBlogPostDate = 'image___childMdx___childrenMdxBlogPost___date',
   ImageChildMdxChildrenMdxBlogPostTags = 'image___childMdx___childrenMdxBlogPost___tags',
+  ImageChildMdxChildrenMdxBlogPostDate = 'image___childMdx___childrenMdxBlogPost___date',
+  ImageChildMdxChildrenMdxBlogPostRedirectFrom = 'image___childMdx___childrenMdxBlogPost___redirectFrom',
   ImageChildMdxChildrenMdxBlogPostExcerpt = 'image___childMdx___childrenMdxBlogPost___excerpt',
   ImageChildMdxChildrenMdxBlogPostImageAlt = 'image___childMdx___childrenMdxBlogPost___imageAlt',
   ImageChildMdxChildrenMdxBlogPostBody = 'image___childMdx___childrenMdxBlogPost___body',
@@ -2625,8 +2720,9 @@ export enum MdxBlogPostFieldsEnum {
   ImageChildMdxChildMdxBlogPostId = 'image___childMdx___childMdxBlogPost___id',
   ImageChildMdxChildMdxBlogPostTitle = 'image___childMdx___childMdxBlogPost___title',
   ImageChildMdxChildMdxBlogPostSlug = 'image___childMdx___childMdxBlogPost___slug',
-  ImageChildMdxChildMdxBlogPostDate = 'image___childMdx___childMdxBlogPost___date',
   ImageChildMdxChildMdxBlogPostTags = 'image___childMdx___childMdxBlogPost___tags',
+  ImageChildMdxChildMdxBlogPostDate = 'image___childMdx___childMdxBlogPost___date',
+  ImageChildMdxChildMdxBlogPostRedirectFrom = 'image___childMdx___childMdxBlogPost___redirectFrom',
   ImageChildMdxChildMdxBlogPostExcerpt = 'image___childMdx___childMdxBlogPost___excerpt',
   ImageChildMdxChildMdxBlogPostImageAlt = 'image___childMdx___childMdxBlogPost___imageAlt',
   ImageChildMdxChildMdxBlogPostBody = 'image___childMdx___childMdxBlogPost___body',
@@ -2776,8 +2872,9 @@ export type MdxBlogPostFilterInput = {
   id?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  date?: Maybe<DateQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
+  date?: Maybe<DateQueryOperatorInput>;
+  redirectFrom?: Maybe<StringQueryOperatorInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
   image?: Maybe<FileFilterInput>;
   imageAlt?: Maybe<StringQueryOperatorInput>;
@@ -2839,9 +2936,93 @@ export enum MdxFieldsEnum {
   RawBody = 'rawBody',
   FileAbsolutePath = 'fileAbsolutePath',
   FrontmatterTitle = 'frontmatter___title',
+  FrontmatterExcerpt = 'frontmatter___excerpt',
   FrontmatterDate = 'frontmatter___date',
-  FrontmatterImage = 'frontmatter___image',
+  FrontmatterImageSourceInstanceName = 'frontmatter___image___sourceInstanceName',
+  FrontmatterImageAbsolutePath = 'frontmatter___image___absolutePath',
+  FrontmatterImageRelativePath = 'frontmatter___image___relativePath',
+  FrontmatterImageExtension = 'frontmatter___image___extension',
+  FrontmatterImageSize = 'frontmatter___image___size',
+  FrontmatterImagePrettySize = 'frontmatter___image___prettySize',
+  FrontmatterImageModifiedTime = 'frontmatter___image___modifiedTime',
+  FrontmatterImageAccessTime = 'frontmatter___image___accessTime',
+  FrontmatterImageChangeTime = 'frontmatter___image___changeTime',
+  FrontmatterImageBirthTime = 'frontmatter___image___birthTime',
+  FrontmatterImageRoot = 'frontmatter___image___root',
+  FrontmatterImageDir = 'frontmatter___image___dir',
+  FrontmatterImageBase = 'frontmatter___image___base',
+  FrontmatterImageExt = 'frontmatter___image___ext',
+  FrontmatterImageName = 'frontmatter___image___name',
+  FrontmatterImageRelativeDirectory = 'frontmatter___image___relativeDirectory',
+  FrontmatterImageDev = 'frontmatter___image___dev',
+  FrontmatterImageMode = 'frontmatter___image___mode',
+  FrontmatterImageNlink = 'frontmatter___image___nlink',
+  FrontmatterImageUid = 'frontmatter___image___uid',
+  FrontmatterImageGid = 'frontmatter___image___gid',
+  FrontmatterImageRdev = 'frontmatter___image___rdev',
+  FrontmatterImageIno = 'frontmatter___image___ino',
+  FrontmatterImageAtimeMs = 'frontmatter___image___atimeMs',
+  FrontmatterImageMtimeMs = 'frontmatter___image___mtimeMs',
+  FrontmatterImageCtimeMs = 'frontmatter___image___ctimeMs',
+  FrontmatterImageAtime = 'frontmatter___image___atime',
+  FrontmatterImageMtime = 'frontmatter___image___mtime',
+  FrontmatterImageCtime = 'frontmatter___image___ctime',
+  FrontmatterImageBirthtime = 'frontmatter___image___birthtime',
+  FrontmatterImageBirthtimeMs = 'frontmatter___image___birthtimeMs',
+  FrontmatterImageBlksize = 'frontmatter___image___blksize',
+  FrontmatterImageBlocks = 'frontmatter___image___blocks',
+  FrontmatterImagePublicUrl = 'frontmatter___image___publicURL',
+  FrontmatterImageChildrenImageSharp = 'frontmatter___image___childrenImageSharp',
+  FrontmatterImageChildrenImageSharpGatsbyImageData = 'frontmatter___image___childrenImageSharp___gatsbyImageData',
+  FrontmatterImageChildrenImageSharpId = 'frontmatter___image___childrenImageSharp___id',
+  FrontmatterImageChildrenImageSharpChildren = 'frontmatter___image___childrenImageSharp___children',
+  FrontmatterImageChildImageSharpGatsbyImageData = 'frontmatter___image___childImageSharp___gatsbyImageData',
+  FrontmatterImageChildImageSharpId = 'frontmatter___image___childImageSharp___id',
+  FrontmatterImageChildImageSharpChildren = 'frontmatter___image___childImageSharp___children',
+  FrontmatterImageChildrenMdx = 'frontmatter___image___childrenMdx',
+  FrontmatterImageChildrenMdxRawBody = 'frontmatter___image___childrenMdx___rawBody',
+  FrontmatterImageChildrenMdxFileAbsolutePath = 'frontmatter___image___childrenMdx___fileAbsolutePath',
+  FrontmatterImageChildrenMdxSlug = 'frontmatter___image___childrenMdx___slug',
+  FrontmatterImageChildrenMdxBody = 'frontmatter___image___childrenMdx___body',
+  FrontmatterImageChildrenMdxExcerpt = 'frontmatter___image___childrenMdx___excerpt',
+  FrontmatterImageChildrenMdxHeadings = 'frontmatter___image___childrenMdx___headings',
+  FrontmatterImageChildrenMdxHtml = 'frontmatter___image___childrenMdx___html',
+  FrontmatterImageChildrenMdxMdxAst = 'frontmatter___image___childrenMdx___mdxAST',
+  FrontmatterImageChildrenMdxTableOfContents = 'frontmatter___image___childrenMdx___tableOfContents',
+  FrontmatterImageChildrenMdxTimeToRead = 'frontmatter___image___childrenMdx___timeToRead',
+  FrontmatterImageChildrenMdxChildrenMdxBlogPost = 'frontmatter___image___childrenMdx___childrenMdxBlogPost',
+  FrontmatterImageChildrenMdxId = 'frontmatter___image___childrenMdx___id',
+  FrontmatterImageChildrenMdxChildren = 'frontmatter___image___childrenMdx___children',
+  FrontmatterImageChildMdxRawBody = 'frontmatter___image___childMdx___rawBody',
+  FrontmatterImageChildMdxFileAbsolutePath = 'frontmatter___image___childMdx___fileAbsolutePath',
+  FrontmatterImageChildMdxSlug = 'frontmatter___image___childMdx___slug',
+  FrontmatterImageChildMdxBody = 'frontmatter___image___childMdx___body',
+  FrontmatterImageChildMdxExcerpt = 'frontmatter___image___childMdx___excerpt',
+  FrontmatterImageChildMdxHeadings = 'frontmatter___image___childMdx___headings',
+  FrontmatterImageChildMdxHtml = 'frontmatter___image___childMdx___html',
+  FrontmatterImageChildMdxMdxAst = 'frontmatter___image___childMdx___mdxAST',
+  FrontmatterImageChildMdxTableOfContents = 'frontmatter___image___childMdx___tableOfContents',
+  FrontmatterImageChildMdxTimeToRead = 'frontmatter___image___childMdx___timeToRead',
+  FrontmatterImageChildMdxChildrenMdxBlogPost = 'frontmatter___image___childMdx___childrenMdxBlogPost',
+  FrontmatterImageChildMdxId = 'frontmatter___image___childMdx___id',
+  FrontmatterImageChildMdxChildren = 'frontmatter___image___childMdx___children',
+  FrontmatterImageId = 'frontmatter___image___id',
+  FrontmatterImageParentId = 'frontmatter___image___parent___id',
+  FrontmatterImageParentChildren = 'frontmatter___image___parent___children',
+  FrontmatterImageChildren = 'frontmatter___image___children',
+  FrontmatterImageChildrenId = 'frontmatter___image___children___id',
+  FrontmatterImageChildrenChildren = 'frontmatter___image___children___children',
+  FrontmatterImageInternalContent = 'frontmatter___image___internal___content',
+  FrontmatterImageInternalContentDigest = 'frontmatter___image___internal___contentDigest',
+  FrontmatterImageInternalDescription = 'frontmatter___image___internal___description',
+  FrontmatterImageInternalFieldOwners = 'frontmatter___image___internal___fieldOwners',
+  FrontmatterImageInternalIgnoreType = 'frontmatter___image___internal___ignoreType',
+  FrontmatterImageInternalMediaType = 'frontmatter___image___internal___mediaType',
+  FrontmatterImageInternalOwner = 'frontmatter___image___internal___owner',
+  FrontmatterImageInternalType = 'frontmatter___image___internal___type',
   FrontmatterImageAlt = 'frontmatter___imageAlt',
+  FrontmatterTags = 'frontmatter___tags',
+  FrontmatterRedirectFrom = 'frontmatter___redirectFrom',
   Slug = 'slug',
   Body = 'body',
   Excerpt = 'excerpt',
@@ -2859,8 +3040,9 @@ export enum MdxFieldsEnum {
   ChildrenMdxBlogPostId = 'childrenMdxBlogPost___id',
   ChildrenMdxBlogPostTitle = 'childrenMdxBlogPost___title',
   ChildrenMdxBlogPostSlug = 'childrenMdxBlogPost___slug',
-  ChildrenMdxBlogPostDate = 'childrenMdxBlogPost___date',
   ChildrenMdxBlogPostTags = 'childrenMdxBlogPost___tags',
+  ChildrenMdxBlogPostDate = 'childrenMdxBlogPost___date',
+  ChildrenMdxBlogPostRedirectFrom = 'childrenMdxBlogPost___redirectFrom',
   ChildrenMdxBlogPostExcerpt = 'childrenMdxBlogPost___excerpt',
   ChildrenMdxBlogPostImageSourceInstanceName = 'childrenMdxBlogPost___image___sourceInstanceName',
   ChildrenMdxBlogPostImageAbsolutePath = 'childrenMdxBlogPost___image___absolutePath',
@@ -2895,7 +3077,6 @@ export enum MdxFieldsEnum {
   ChildrenMdxBlogPostImageBirthtimeMs = 'childrenMdxBlogPost___image___birthtimeMs',
   ChildrenMdxBlogPostImageBlksize = 'childrenMdxBlogPost___image___blksize',
   ChildrenMdxBlogPostImageBlocks = 'childrenMdxBlogPost___image___blocks',
-  ChildrenMdxBlogPostImageUrl = 'childrenMdxBlogPost___image___url',
   ChildrenMdxBlogPostImagePublicUrl = 'childrenMdxBlogPost___image___publicURL',
   ChildrenMdxBlogPostImageChildrenImageSharp = 'childrenMdxBlogPost___image___childrenImageSharp',
   ChildrenMdxBlogPostImageChildrenImageSharpGatsbyImageData = 'childrenMdxBlogPost___image___childrenImageSharp___gatsbyImageData',
@@ -2987,8 +3168,9 @@ export enum MdxFieldsEnum {
   ChildMdxBlogPostId = 'childMdxBlogPost___id',
   ChildMdxBlogPostTitle = 'childMdxBlogPost___title',
   ChildMdxBlogPostSlug = 'childMdxBlogPost___slug',
-  ChildMdxBlogPostDate = 'childMdxBlogPost___date',
   ChildMdxBlogPostTags = 'childMdxBlogPost___tags',
+  ChildMdxBlogPostDate = 'childMdxBlogPost___date',
+  ChildMdxBlogPostRedirectFrom = 'childMdxBlogPost___redirectFrom',
   ChildMdxBlogPostExcerpt = 'childMdxBlogPost___excerpt',
   ChildMdxBlogPostImageSourceInstanceName = 'childMdxBlogPost___image___sourceInstanceName',
   ChildMdxBlogPostImageAbsolutePath = 'childMdxBlogPost___image___absolutePath',
@@ -3023,7 +3205,6 @@ export enum MdxFieldsEnum {
   ChildMdxBlogPostImageBirthtimeMs = 'childMdxBlogPost___image___birthtimeMs',
   ChildMdxBlogPostImageBlksize = 'childMdxBlogPost___image___blksize',
   ChildMdxBlogPostImageBlocks = 'childMdxBlogPost___image___blocks',
-  ChildMdxBlogPostImageUrl = 'childMdxBlogPost___image___url',
   ChildMdxBlogPostImagePublicUrl = 'childMdxBlogPost___image___publicURL',
   ChildMdxBlogPostImageChildrenImageSharp = 'childMdxBlogPost___image___childrenImageSharp',
   ChildMdxBlogPostImageChildrenImageSharpGatsbyImageData = 'childMdxBlogPost___image___childrenImageSharp___gatsbyImageData',
@@ -3228,9 +3409,12 @@ export type MdxFilterListInput = {
 export type MdxFrontmatter = {
   __typename?: 'MdxFrontmatter';
   title: Scalars['String'];
+  excerpt?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  image?: Maybe<File>;
   imageAlt?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  redirectFrom?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
@@ -3243,9 +3427,12 @@ export type MdxFrontmatterDateArgs = {
 
 export type MdxFrontmatterFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
+  excerpt?: Maybe<StringQueryOperatorInput>;
   date?: Maybe<DateQueryOperatorInput>;
-  image?: Maybe<StringQueryOperatorInput>;
+  image?: Maybe<FileFilterInput>;
   imageAlt?: Maybe<StringQueryOperatorInput>;
+  tags?: Maybe<StringQueryOperatorInput>;
+  redirectFrom?: Maybe<StringQueryOperatorInput>;
 };
 
 export type MdxGroupConnection = {
@@ -3377,6 +3564,7 @@ export type QueryBlogPostArgs = {
   title?: Maybe<StringQueryOperatorInput>;
   body?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
+  redirectFrom?: Maybe<StringQueryOperatorInput>;
   date?: Maybe<DateQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
@@ -3427,7 +3615,6 @@ export type QueryFileArgs = {
   birthtimeMs?: Maybe<FloatQueryOperatorInput>;
   blksize?: Maybe<IntQueryOperatorInput>;
   blocks?: Maybe<IntQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
   publicURL?: Maybe<StringQueryOperatorInput>;
   childrenImageSharp?: Maybe<ImageSharpFilterListInput>;
   childImageSharp?: Maybe<ImageSharpFilterInput>;
@@ -3502,8 +3689,6 @@ export type QuerySiteArgs = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<IntQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
-  polyfill?: Maybe<BooleanQueryOperatorInput>;
-  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -3602,8 +3787,9 @@ export type QueryMdxBlogPostArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  date?: Maybe<DateQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
+  date?: Maybe<DateQueryOperatorInput>;
+  redirectFrom?: Maybe<StringQueryOperatorInput>;
   excerpt?: Maybe<StringQueryOperatorInput>;
   image?: Maybe<FileFilterInput>;
   imageAlt?: Maybe<StringQueryOperatorInput>;
@@ -3669,8 +3855,6 @@ export type Site = Node & {
   siteMetadata?: Maybe<SiteSiteMetadata>;
   port?: Maybe<Scalars['Int']>;
   host?: Maybe<Scalars['String']>;
-  polyfill?: Maybe<Scalars['Boolean']>;
-  pathPrefix?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -3877,10 +4061,9 @@ export enum SiteFieldsEnum {
   BuildTime = 'buildTime',
   SiteMetadataTitle = 'siteMetadata___title',
   SiteMetadataDescription = 'siteMetadata___description',
+  SiteMetadataSiteUrl = 'siteMetadata___siteUrl',
   Port = 'port',
   Host = 'host',
-  Polyfill = 'polyfill',
-  PathPrefix = 'pathPrefix',
   Id = 'id',
   ParentId = 'parent___id',
   ParentParentId = 'parent___parent___id',
@@ -3974,8 +4157,6 @@ export type SiteFilterInput = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<IntQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
-  polyfill?: Maybe<BooleanQueryOperatorInput>;
-  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -4120,6 +4301,7 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsExtensions = 'pluginCreator___pluginOptions___extensions',
   PluginCreatorPluginOptionsGatsbyRemarkPlugins = 'pluginCreator___pluginOptions___gatsbyRemarkPlugins',
   PluginCreatorPluginOptionsGatsbyRemarkPluginsResolve = 'pluginCreator___pluginOptions___gatsbyRemarkPlugins___resolve',
+  PluginCreatorPluginOptionsDefaultLayoutsDefault = 'pluginCreator___pluginOptions___defaultLayouts___default',
   PluginCreatorPluginOptionsLessBabel = 'pluginCreator___pluginOptions___lessBabel',
   PluginCreatorPluginOptionsMediaTypes = 'pluginCreator___pluginOptions___mediaTypes',
   PluginCreatorPluginOptionsName = 'pluginCreator___pluginOptions___name',
@@ -4422,6 +4604,7 @@ export enum SitePluginFieldsEnum {
   PluginOptionsGatsbyRemarkPluginsResolve = 'pluginOptions___gatsbyRemarkPlugins___resolve',
   PluginOptionsGatsbyRemarkPluginsOptionsMaxWidth = 'pluginOptions___gatsbyRemarkPlugins___options___maxWidth',
   PluginOptionsGatsbyRemarkPluginsOptionsLinkImagesToOriginal = 'pluginOptions___gatsbyRemarkPlugins___options___linkImagesToOriginal',
+  PluginOptionsDefaultLayoutsDefault = 'pluginOptions___defaultLayouts___default',
   PluginOptionsLessBabel = 'pluginOptions___lessBabel',
   PluginOptionsMediaTypes = 'pluginOptions___mediaTypes',
   PluginOptionsName = 'pluginOptions___name',
@@ -4565,6 +4748,7 @@ export type SitePluginPluginOptions = {
   cacheDigest?: Maybe<Scalars['String']>;
   extensions?: Maybe<Array<Maybe<Scalars['String']>>>;
   gatsbyRemarkPlugins?: Maybe<Array<Maybe<SitePluginPluginOptionsGatsbyRemarkPlugins>>>;
+  defaultLayouts?: Maybe<SitePluginPluginOptionsDefaultLayouts>;
   lessBabel?: Maybe<Scalars['Boolean']>;
   mediaTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
   name?: Maybe<Scalars['String']>;
@@ -4573,6 +4757,15 @@ export type SitePluginPluginOptions = {
   allExtensions?: Maybe<Scalars['Boolean']>;
   isTSX?: Maybe<Scalars['Boolean']>;
   jsxPragma?: Maybe<Scalars['String']>;
+};
+
+export type SitePluginPluginOptionsDefaultLayouts = {
+  __typename?: 'SitePluginPluginOptionsDefaultLayouts';
+  default?: Maybe<Scalars['String']>;
+};
+
+export type SitePluginPluginOptionsDefaultLayoutsFilterInput = {
+  default?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePluginPluginOptionsFilterInput = {
@@ -4589,6 +4782,7 @@ export type SitePluginPluginOptionsFilterInput = {
   cacheDigest?: Maybe<StringQueryOperatorInput>;
   extensions?: Maybe<StringQueryOperatorInput>;
   gatsbyRemarkPlugins?: Maybe<SitePluginPluginOptionsGatsbyRemarkPluginsFilterListInput>;
+  defaultLayouts?: Maybe<SitePluginPluginOptionsDefaultLayoutsFilterInput>;
   lessBabel?: Maybe<BooleanQueryOperatorInput>;
   mediaTypes?: Maybe<StringQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
@@ -4634,11 +4828,13 @@ export type SiteSiteMetadata = {
   __typename?: 'SiteSiteMetadata';
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  siteUrl?: Maybe<Scalars['String']>;
 };
 
 export type SiteSiteMetadataFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
+  siteUrl?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SiteSortInput = {
@@ -4672,6 +4868,23 @@ export type TransformOptions = {
 export type WebPOptions = {
   quality?: Maybe<Scalars['Int']>;
 };
+
+export type ProfileImageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProfileImageQuery = (
+  { __typename?: 'Query' }
+  & { file?: Maybe<(
+    { __typename?: 'File' }
+    & { childImageSharp?: Maybe<(
+      { __typename?: 'ImageSharp' }
+      & { fluid?: Maybe<(
+        { __typename?: 'ImageSharpFluid' }
+        & GatsbyImageSharpFluidFragment
+      )> }
+    )> }
+  )> }
+);
 
 export type PostQueryVariables = Exact<{
   id: Scalars['String'];
