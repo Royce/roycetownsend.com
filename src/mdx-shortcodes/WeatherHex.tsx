@@ -53,7 +53,9 @@ export const WeatherHexApp = (): JSX.Element => (
       mx: 'auto',
       borderWidth: 1,
       borderColor: 'muted',
+      borderStyle: 'solid',
       borderRadius: 4,
+      backgroundColor: 'white',
       flexDirection: 'column',
       alignItems: 'center',
     }}

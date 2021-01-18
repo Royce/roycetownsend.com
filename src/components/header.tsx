@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { Link } from 'gatsby';
 import { Container, Flex, jsx } from 'theme-ui';
+
 import NavLink from './NavLink';
+import ToggleColorModeButton from './ToggleColorModeButton';
 
 const Header: React.FC = () => (
   <Container>
@@ -17,7 +19,9 @@ const Header: React.FC = () => (
         >
           Royce Townsend
         </Link>
-        <div sx={{ mx: 'auto' }} />
+        <div sx={{ mx: 'auto' }}>
+          <ToggleColorModeButton />
+        </div>
         <NavLink to="/" partiallyActive={false}>
           About
         </NavLink>
