@@ -16,6 +16,7 @@ const Layout: React.FC = ({ children }) => (
       sx={{
         width: `100%`,
         flex: `1 1 auto`,
+        position: 'relative',
       }}
     >
       <Container>{children}</Container>

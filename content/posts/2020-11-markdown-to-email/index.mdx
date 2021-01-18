@@ -1,0 +1,36 @@
+---
+title: Markdown to Email
+excerpt: A NodeJS script to generate and send an email based on Markdown content.
+date: 2020-11-03
+image: cover.jpg
+imageAlt: 'Left: Markdown formatted text. Right: Rendered HTML.'
+tags:
+  - Portfolio
+  - Javascript
+  - React
+  - Markdown
+  - MDX
+  - MJML
+  - AWS
+  - Email
+  - Amazon SES
+redirectFrom:
+  - /blog/2020-11-03-markdown-email-project/
+---
+
+I got sick of copying content into Mailchimp and fixing the formatting, so I started wondering how hard it would be to turn a markdown file into email friendly HTML and send it using Amazon SES.
+
+MDX and MJML do most of the heavy lifting.
+
+I learn _a bit_ about about the MDX runtime and how remark plugins work. I realised I didn't really understand the interplay between the async/await syntax sugar and Promises.
+
+[Here is the code][code].
+
+[code]: https://github.com/Royce/perth-blues-dance-mailer
+
+## Missing features
+
+- 2 column layout
+- mailing list management (unsubsribe etc.)
+- requesting production access to Amazon SES
+- tests and refactoring

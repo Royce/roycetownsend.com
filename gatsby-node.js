@@ -13,8 +13,19 @@ const PostsTemplate = path.resolve(`./src/templates/posts.tsx`);
 const basePath = '/blog/';
 const contentPath = 'content/posts';
 const assetPath = 'content/assets';
-const imageMaxWidth = 1000;
-const excerptLength = 200;
+const imageMaxWidth = 896;
+const excerptLength = 110;
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        react: require.resolve('./node_modules/react'),
+        'react-dom': require.resolve('./node_modules/react-dom'),
+      },
+    },
+  });
+};
 
 // Ensure that content directories exist at site-level
 exports.onPreBootstrap = ({ store }) => {

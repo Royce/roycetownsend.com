@@ -1,0 +1,89 @@
+---
+title: Hooks and multiple React instances.
+excerpt: Error. Invalid hook call. Hooks can only be called inside of the body of a function component.
+date: 2020-12-06
+image: cover.jpg
+imageAlt: A javascript stacktrace error in the Chrome Dev Tools
+tags:
+  - Colophon
+  - Gatsby
+  - React
+  - Webpack
+redirectFrom:
+  - /blog/2020-12-06-importing-other-projects/
+---
+
+## Lofty Dreams
+
+I wanted to include the UI of [my weather hex map experiment](http://github.com/Royce/weather-hex) on the pages of the blog -- as an alternative to including a screen shot.
+This blog is built on Gatsby; the other thing is build with Create-React-App.
+It _sounds_ easy right!?
+
+```json
+// Reference the other project in packages.json
+"dependencies": {
+  "weather-hex": "link:../weather-hex"
+}
+```
+
+```javascript
+import React from 'react';
+import Widget from 'weather-hex/src/App';
+
+// Do something with the widget.
+// Here I am exporting it, just to include in a markdown page.
+export default () => <Widget />;
+```
+
+## Could it be this easy?
+
+Nope. We get this _slightly misleading_ error. "Hooks can only be called inside of the body of a function component", BUT the RecoilJS hooks in the app ARE being called from inside _function_ components. There are no class components in sight.
+
+    Error: Invalid hook call.
+    Hooks can only be called inside of the body of a function component.
+    This could happen for one of the following reasons:
+
+    1. You might have mismatching versions of React and the renderer (such as React DOM)
+    2. You might be breaking the Rules of Hooks
+    3. You might have more than one copy of React in the same app
+
+    See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.
+
+## What is going on?
+
+I ruled out "mismatching versions of React", by trying to force the versions of `react` and `react-dom` with [yarn version resolution](https://classic.yarnpkg.com/en/docs/selective-version-resolutions/) (which didn't help) and then just upgrading `react` and `react-dom` to `17.0.1` in both the blog and the app.
+
+Finding a solution was confused by the fact that I was including the widget directly in MDX so sometimes I got errors complaining about a missing `RecoilRoot`. Including the widget in a non-Markdown page ruled out this complication.
+
+Looking in Chrome Dev Tools suggested that I did indeed have more than "one copy of React" and they are the same version. Great! Now what.
+
+## Solutions
+
+A **work-around** is to add a [custom webpack configuration](https://www.gatsbyjs.com/docs/add-custom-webpack-config/) to force all of the references to 'react' or 'react.dom' to the _blogs_ node_modules folder.
+
+Luckily this is easy with Gatsby, _phew_...
+
+```javascript
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        react: require.resolve('./node_modules/react'),
+        'react-dom': require.resolve('./node_modules/react-dom'),
+      },
+    },
+  });
+};
+```
+
+## Alternatives?
+
+Splitting the [app](http://github.com/Royce/weather-hex) into a library and seperate SPA, where the library uses [peerDependencies](https://classic.yarnpkg.com/en/docs/dependency-types/#toc-peerdependencies) to avoid including a second copy of `react` etc. is possible, and perhaps even recommended -- except that I am not _really_ making a reusable component.
+
+I would rather not, if I can avoid it.
+
+## Things I tried that didn't help.
+
+- Making the blog and app use the same version of `react` may have helped, but it didn't fix the problem.
+- Playing around with `yarn link` is not helpful, in this case.
+- One of the many Github issues suggested trying [lazy loaded components with MDX](https://www.gatsbyjs.com/docs/mdx/importing-and-using-components/), e.g. `React.Lazy` or `loadable-component`.

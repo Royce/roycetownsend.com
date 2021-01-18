@@ -1,8 +1,8 @@
 {
-  "name": "royce-townsend",
+  "name": "royce-townsend-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Royce Townsend",
+  "description": "Personal Website",
   "author": "Royce Townsend",
   "keywords": [
     "gatsby"
@@ -42,7 +42,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
-    "theme-ui": "^0.3.5"
+    "theme-ui": "^0.3.5",
+    "weather-hex": "link:../weather-hex"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.20.0",

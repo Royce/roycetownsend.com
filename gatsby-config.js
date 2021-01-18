@@ -1,6 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: 'Royce Townsend',
+    description: 'Royce Townsend. Perth, Western Australia.',
+    siteUrl: process.env.SITE_URL || 'http://localhost:8000',
   },
   plugins: [
     'gatsby-plugin-root-import', // map src/ to src/
@@ -11,7 +13,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        icon: 'content/assets/icon.png',
+        icon: 'content/assets/icon.svg',
       },
     },
     {
@@ -22,7 +24,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 1000,
+              maxWidth: 896,
               linkImagesToOriginal: false,
             },
           },
@@ -30,6 +32,9 @@ module.exports = {
           { resolve: `gatsby-remark-copy-linked-files` },
           { resolve: `gatsby-remark-smartypants` },
         ],
+        defaultLayouts: {
+          default: require.resolve('./src/components/layout.tsx'),
+        },
       },
     },
     'gatsby-transformer-sharp',
