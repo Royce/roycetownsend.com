@@ -8,11 +8,12 @@
     "gatsby"
   ],
   "scripts": {
+    "start": "gatsby clean && gatsby develop",
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
-    "start": "gatsby develop",
+    "preview": "gatsby build && gatsby serve",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
     "codegen": "graphql-codegen --config graphql-codegen.yml",
     "type-check": "tsc",
     "lint": "eslint \"src/**/*.+(ts|js|jsx|tsx)\"",
